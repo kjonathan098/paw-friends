@@ -1,5 +1,7 @@
+require('dotenv').config()
 const petRoute = require('./3-routes/petRoute')
 const authRoute = require('./3-routes/authRoute')
+const userRoute = require('./3-routes/userRoute')
 const errorMW = require('./6-middlerWares/errorMW')
 
 const express = require('express')
@@ -14,6 +16,7 @@ mongoose
 
 app.use('/api/pet', petRoute)
 app.use('/api/auth', authRoute)
+app.use('/api/user', userRoute)
 
 app.use(errorMW)
 

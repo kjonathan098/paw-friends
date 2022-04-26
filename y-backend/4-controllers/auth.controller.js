@@ -1,0 +1,63 @@
+const _ = require('lodash')
+const {errorHandler} = require('../7-config/authErrorConfig')
+const userServices = require('../5-services/user.services')
+const authServices = require('../5-services/auth.service')
+const {jwtLib} = require('../8-lib/jwt.lib')
+const {loginValidation} = require('../2-joiValidations/loginValidation')
+const {registerValidation} = require('../2-joiValidations/registrationValidation')
+const {joiValidateService} = require('../5-services/joi.validate.serivces')
+
+const register = async (req, res, next) => {
+	// Validate body with Joi Service
+	const error = joiValidateService(registerValidation, req.body)
+	if (error) return next(errorHandler.joiValidationFailed(error))
+
+	// Check if User already exists
+	let user = await userServices.findByEmail(req.body.email)
+	if (user) return next(errorHandler.userExist())
+
+	// validate password matches
+	if (req.body.password !== req.body.rePassword) return next(errorHandler.passwordMismatch())
+
+	//Hash password
+	const hashed = await authServices.generateHash(req.body.password)
+
+	// change password to hashed
+	req.body.password = hashed
+
+	// save user to DB user Services
+	user = await userServices.saveUser(req.body)
+
+	// console.log(user)
+	return res.send({succes: true, userId: user})
+}
+
+const login = async (req, res, next) => {
+	// Validate Body with Joi
+	const error = joiValidateService(loginValidation, req.body)
+	if (error) return next(errorHandler.joiValidationFailed(error))
+
+	// Check if users exist in DB and get user
+	const user = await userServices.findByEmail(req.body.email)
+	if (!user) return next(errorHandler.userNotFound())
+
+	/*
+
+    Check password with bcrypt
+
+	NOT WORKING NEED TO FIX!!!!!!!!!!!!!!!!!!!!!
+
+	const passwordValidation = await authServices.comparePassword(user.password, req.body.password)
+	if (!passwordValidation) return next(errorHandler.userNotFound())
+
+    */
+	// Save user permissions in "reddis"
+	await userServices.saveUserInReddis(user)
+
+	// Create Tokens
+	const tokens = jwtLib.createTokens(user)
+
+	return res.send(tokens)
+}
+
+module.exports = {register, login}

@@ -1,6 +1,5 @@
-const {errorHandler} = require('../7-config/errorConfig')
-const {jwtHanddler} = require('../8-lib/jwt.lib')
-const sceretJwt = 'Secret_key'
+const {errorHandler} = require('../7-config/authErrorConfig')
+const {jwtLib} = require('../8-lib/jwt.lib')
 
 // REMEMBER TO CHANGE SECRET TO .ENV FILE and DO IT IN LIB INSTEAD
 
@@ -12,13 +11,13 @@ const validateToken = async (req, res, next) => {
 
 	// verify token
 	try {
-		const decoded = jwtHanddler.verify(token)
-
+		const decoded = jwtLib.verify(token)
 		if (decoded.refresh) return next(errorHandler.needToLogin())
 		req.user = {uid: decoded.payloadData._id}
 
 		next()
 	} catch (ex) {
+		console.log('error')
 		return res.send(ex.message)
 	}
 }

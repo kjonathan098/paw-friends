@@ -1,84 +1,36 @@
-const _ = require('lodash')
-const {Pet} = require('../1-models/petsModels')
-const {UserSavedPet} = require('../1-models/userSavedPetsModel')
-const {validatePet} = require('../2-joiValidations/petValidation')
-const {petErrorHandler} = require('../7-config/petErrorConfig')
 const {validateToken} = require('../6-middlerWares/validateToken')
 const express = require('express')
 const setPermissions = require('../6-middlerWares/setPermissions')
+
+const petController = require('../4-controllers/pet.controller')
+
 const router = express.Router()
 
 //POST
-router.post('/', validateToken, setPermissions, async (req, res, next) => {
-	// Validate user is an admin
-	if (!req.user.permissions.admin) next(petErrorHandler.onlyAdmin())
+router.post('/', validateToken, setPermissions, petController.addPet)
 
-	// Validate req
-	const {error} = validatePet(req.body)
-	if (error) return next(petErrorHandler.joiValidationFailed(error.details[0].message))
+// FIND ALL
+router.get('/', validateToken, petController.findAll)
 
-	// Create new pet Obj
-	let pet = _.pick(req.body, ['type', 'name', 'adoptionStatus', 'picture', 'height', 'weight', 'color', 'bio', 'hypoallergenic', 'dietaryRestrictions', 'breed'])
+// FIND ONE
+router.get('/:id', petController.findOne)
 
-	// create instace of Pet
-	pet = new Pet(pet)
+// FIND ONE AND ADOPT
+router.post('/:id/adopt', validateToken, petController.adoptFoster)
 
-	// save Pet on DB
-	pet = await pet.save()
-	return res.send(pet)
-})
+// RETURN A PET
+router.post('/:id/return', validateToken, petController.returnPet)
 
-// GET ALL
-router.get('/', async (req, res) => {
-	// Get all pets from DB
-	const pets = await Pet.find()
-	res.send(pets)
-})
+// EDIT PET
+router.put('/:id', validateToken, setPermissions, petController.editPet)
 
-// GET ONE
-router.get('/:id', async (req, res) => {
-	// Get specific Pet
-	const pet = await Pet.findById(req.params.id)
-	res.send(pet)
-})
+// SAVE A FAVORITE PET
+router.post('/:id/save', validateToken, petController.savePet)
 
-// GET ONE AND ADOPT (CHANGE STATUS)
+// DELETE A FAVORITE A PET
+router.delete('/:id/save', validateToken, petController.deletePet)
 
-router.post('/:id/adopt', validateToken, async (req, res, next) => {
-	// NEED TO DO validate request
-
-	// Find if pet exist
-	const userRequest = req.body.request
-	const petId = req.params.id
-	let pet = await Pet.findById({_id: petId})
-	if (!pet) return next(petErrorHandler.notFound())
-
-	// if pet exist check for status
-
-	if (pet.adoptionStatus === 'adopt') return next(petErrorHandler.alreadyAdopted())
-	if (pet.adoptionStatus === 'foster' && userRequest === 'foster') return next(petErrorHandler.alreadyFostered())
-
-	// Find if user already has a Doc & Update
-
-	const findDoc = await UserSavedPet.findOneAndUpdate({uid: req.user.uid}, {$push: {pets: petId}})
-	if (findDoc) {
-		// change pet status
-		await Pet.findByIdAndUpdate({_id: petId}, {adoptionStatus: userRequest})
-		return res.send('Pet added to your list')
-	}
-
-	// // If not create one for him
-	pet = new UserSavedPet({uid: req.body.uid, pets: pet._id})
-
-	// // save doc in DB
-
-	await pet.save()
-
-	// Update status of pet adoptionStatus
-
-	await Pet.findByIdAndUpdate({_id: petId}, {adoptionStatus: petStatus})
-
-	return res.send('Pet added to your list')
-})
+// GET A USER'S ADOPT/SAVED PETS
+router.get('/user/:id', petController.findUserPets)
 
 module.exports = router

@@ -2,9 +2,9 @@ const jwt = require('jsonwebtoken')
 const sceretJwt = 'Secret_key'
 const _ = require('lodash')
 
-const jwtHanddler = {
+const jwtLib = {
 	createTokens: (user) => {
-		const expDate = Math.floor(Date.now() / 1000) * 60 * 365
+		const expDate = Math.floor((Date.now() / 1000) * 60 * 60 * 24 * 365)
 
 		const refreshExp = Math.floor((Date.now() / 1000) * 60 * 60 * 24 * 365)
 
@@ -23,4 +23,4 @@ const jwtHanddler = {
 	},
 }
 
-module.exports = {jwtHanddler}
+module.exports = {jwtLib}

@@ -1,6 +1,7 @@
 const {Tokens} = require('../1-models/tokensModel')
 const _ = require('lodash')
 const {UserPermission} = require('../1-models/userPermissionsModel')
+const bcryptLib = require('../8-lib/bcrypt.lib')
 
 const saveTokensDB = async (access_token, refresh_token, uid) => {
 	let tokens = new Tokens({
@@ -20,7 +21,20 @@ const saveUserInReddis = async (user) => {
 	userReddis = new UserPermission(userReddis)
 
 	await userReddis.save()
-	console.log('success')
 	return 'success'
 }
-module.exports = {saveTokensDB, saveUserInReddis}
+
+const generateHash = async (password) => {
+	const hash = await bcryptLib.hash(password)
+	return hash
+}
+
+const comparePassword = async (userPass, reqPass) => {
+	const res = await bcryptLib.compare(userPass, reqPass)
+
+	return res
+}
+
+
+
+module.exports = {saveTokensDB, saveUserInReddis, generateHash, comparePassword}
