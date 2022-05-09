@@ -102,15 +102,17 @@ const removePetFromList = async (uid, petId) => {
 const findUserStoredPets = async (userId) => {
 	// find adopted pets and populate
 	let adoptedPets = await AdoptPet.findOne({uid: userId}).populate('adoptedPet').populate('uid', 'name , -_id')
+	console.log(adoptedPets.adoptedPet)
 
 	// find favorite pets and populate
 	const favoritePets = await FavoritePet.findOne({uid: userId}).populate('favoritePet')
 
+
 	// Join the favorite pets to obj
 	const newObj = {
 		userName: adoptedPets.uid.name,
-		adoptedPets: adoptedPets.adoptedPets,
-		favoritePets: favoritePets.favoritePet,
+		adoptedPets: adoptedPets.adoptedPet,
+		// favoritePets: favoritePets.favoritePet,
 	}
 
 	return newObj

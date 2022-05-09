@@ -31,6 +31,6 @@ router.post('/:id/save', validateToken, petController.savePet)
 router.delete('/:id/save', validateToken, petController.deletePet)
 
 // GET A USER'S ADOPT/SAVED PETS
-router.get('/user/:id', petController.findUserPets)
+router.get('/userPets/:id', petController.findUserPets)
 
 module.exports = router

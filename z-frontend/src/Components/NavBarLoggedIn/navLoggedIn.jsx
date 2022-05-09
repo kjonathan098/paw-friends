@@ -1,8 +1,7 @@
 import React, {useContext} from 'react'
-import {Box, Flex, Avatar, HStack, Link, IconButton, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, useColorModeValue, Stack} from '@chakra-ui/react'
+import {Box, Flex, Avatar, HStack, Link, IconButton, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, useColorModeValue, Stack, Center} from '@chakra-ui/react'
 import {useNavigate} from 'react-router-dom'
 import {authContext} from '../../Context/AuthContext'
-
 
 const NavLoggedIn = () => {
 	const {isLoggedIn, handdleLogout} = useContext(authContext)
@@ -28,9 +27,11 @@ const NavLoggedIn = () => {
 					<MenuItem onClick={myProfile}>Profile</MenuItem>
 					<MenuDivider />
 					<MenuItem>
-						<Box as="button" bg={'red.400'} rounded={'full'} color={'white'} _hover={{bg: 'red.500'}} w={'80%'} onClick={handdleLogout}>
-							Logout
-						</Box>
+						<Center width={'100%'}>
+							<Box as="button" bg={'red.400'} rounded={'full'} color={'white'} _hover={{bg: 'red.500'}} w={'80%'} onClick={handdleLogout}>
+								Logout
+							</Box>
+						</Center>
 					</MenuItem>
 				</MenuList>
 			</Menu>
