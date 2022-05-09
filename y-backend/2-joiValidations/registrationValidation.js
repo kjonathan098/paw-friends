@@ -22,8 +22,9 @@ const editProfileValidation = (object) => {
 		email: Joi.string().min(3).email(),
 		password: Joi.string().min(3).max(30),
 		rePassword: Joi.string().min(3).max(30),
-		phone: Joi.number().min(5).max(15),
+		phone: Joi.number().min(4),
 		permissions: Joi.object(),
+		bio: Joi.string().min(1).max(250),
 	})
 
 	const validation = schema.validate(object)

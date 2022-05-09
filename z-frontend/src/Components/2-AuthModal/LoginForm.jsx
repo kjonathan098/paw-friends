@@ -1,32 +1,39 @@
 import {Flex, Box, FormControl, FormLabel, Input, Checkbox, Stack, Link, Button, Heading, Text, useColorModeValue, Badge} from '@chakra-ui/react'
 import {useState} from 'react'
 import axios from 'axios'
+import {authContext} from '../../Context/AuthContext'
+import {useContext} from 'react'
+import {loginModalContext} from '../../Context/LoginModalContext'
+import {useNavigate} from 'react-router-dom'
+import useLoginInput from '../y-CustomHooks/loginInputs'
 
 export default function LoginForm({switchFormContent}) {
 	const [error, setError] = useState()
-	const [email, setEmail] = useState()
-	const [password, setPassword] = useState()
 
-	const handleInput = {
-		email: (e) => {
-			setEmail(e.target.value)
-		},
-		password: (e) => {
-			setPassword(e.target.value)
-		},
-	}
+	// auth context
+	const isLoggedIn = useContext(authContext)
+	const loginModalSwitcher = useContext(loginModalContext)
+	const navigate = useNavigate('/')
+
+	const {handdleEmail, handdlePassword, password, email} = useLoginInput()
 
 	const handleLogin = async () => {
 		try {
-			const res = await axios.post('http://localhost:4000/api/auth/login', {
-				email: email,
-				password: password,
-			})
+			const res = await axios.post('http://localhost:4000/api/auth/login', {email, password})
 
-			// Keep doing auth
 			console.log(res)
+			
+			//extract tokens and set them in local
+			const access_token = res.data.acces_token
+			const refresh_token = res.data.refresh_token
+
+			const userInfo = {name: res.data.name, surName: res.data.surName , uid:res.data.uid} 
+			isLoggedIn.handdleLogin(access_token, refresh_token, userInfo)
+			loginModalSwitcher.onClose(true)
+			navigate('/')
 		} catch (error) {
-			setError(error.response.data.message)
+			// setError(error.response.data.message)
+			setError('Error')
 			console.log(error)
 		}
 	}
@@ -44,11 +51,11 @@ export default function LoginForm({switchFormContent}) {
 					<Stack spacing={4}>
 						<FormControl id="email">
 							<FormLabel>Email address</FormLabel>
-							<Input type="email" onChange={handleInput.email} />
+							<Input type="email" onChange={handdleEmail} />
 						</FormControl>
 						<FormControl id="password">
 							<FormLabel>Password</FormLabel>
-							<Input type="password" onChange={handleInput.password} />
+							<Input type="password" onChange={handdlePassword} />
 						</FormControl>
 						{error && (
 							<Badge colorScheme="red" align={'center'}>

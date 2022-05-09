@@ -1,7 +1,12 @@
 import {Stack, Flex, Button, Text, VStack, useBreakpointValue} from '@chakra-ui/react'
+import {useContext} from 'react'
+import {authContext} from '../../Context/AuthContext'
 import hero from '../z-Images/hero3.jpeg'
+import hero4 from '../z-Images/hero4.jpeg'
 
 export default function Hero() {
+
+
 	return (
 		<Flex w={'full'} h={'100vh'} backgroundImage={hero} backgroundSize={'cover'} backgroundPosition={'center center'}>
 			<VStack w={'full'} justify={'center'} px={useBreakpointValue({base: 4, md: 8})} bgGradient={'linear(to-r, blackAlpha.400, transparent)'}>

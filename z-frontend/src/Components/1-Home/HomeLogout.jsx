@@ -5,17 +5,15 @@ import AuthModal from '../2-AuthModal/AuthModal'
 import Hero from './Hero'
 import {authContext} from '../../Context/AuthContext'
 
-const Home = () => {
+const HomeLogout = () => {
 	const isLoggedIn = useContext(authContext)
-	console.log(isLoggedIn.isLoggedIn, 'is logged in?')
 	return (
 		<div className="homeMain">
 			<div className="heroimage">
 				<Hero />
-				<AuthModal />
 			</div>
 		</div>
 	)
 }
 
-export default Home
+export default HomeLogout

@@ -1,24 +1,33 @@
 import './App.css'
 import {NavLink, Route, Routes} from 'react-router-dom'
-import Home from './Components/1-Home/Home'
+import HomeLogout from './Components/1-Home/HomeLogout'
 import LoginModalProvider from '../src/Context/LoginModalProvider'
 import {loginModalContext} from './Context/LoginModalContext'
-import {useContext} from 'react'
-import LoginButton from './Components/z-Helpers/LoginButton'
+import {useContext, useEffect, useState} from 'react'
 import AuthProvider from './Context/AuthProvider'
 import {authContext} from './Context/AuthContext'
+import HomeLogin from './Components/1-Home/HomeLogin'
+import AuthModal from './Components/2-AuthModal/AuthModal'
+import AuthRoute from './Components/3-AuthRoute/AuthRoute'
+import NavLoggedIn from './Components/NavBarLoggedIn/navLoggedIn'
+import {Flex} from '@chakra-ui/react'
+import SearchPets from './Components/4-SearchPets/SearchPets'
+import MyPets from './Components/5-MyPets/MyPets'
+import Profile from './Components/6-Profile/Profile'
+import LoginButton from './UI_Kit/LoginButton'
 
 function App() {
+	const [userLoggedIn, setUserLoggedIn] = useState()
 	const modalSwitcher = useContext(loginModalContext)
-	const isLoggedIn = useContext(authContext)
+
 	return (
-		<LoginModalProvider>
-			<AuthProvider>
+		<AuthProvider>
+			<LoginModalProvider>
 				<div className="App">
-					<div className="navBar">
+					<Flex alignItems={'center'}>
 						<div className="menuMain">
 							<div>Logo</div>
-							<div>
+							<Flex alignItems={'center'} spacing={10} w="500px">
 								<NavLink to="/" className="navLkink">
 									Home
 								</NavLink>
@@ -26,17 +35,37 @@ function App() {
 									Pets
 								</NavLink>
 								<LoginButton />
-							</div>
+								<NavLoggedIn />
+							</Flex>
 						</div>
-					</div>
+					</Flex>
 					<div>
 						<Routes>
-							<Route path="/" element={<Home />} />
+							<Route
+								path="/"
+								element={
+									<AuthRoute>
+										<HomeLogin />
+									</AuthRoute>
+								}
+							/>
+							<Route path="/login" element={<HomeLogout />} />
+							<Route path="/pets" element={<SearchPets />} />
+							<Route path="/myPets" element={<MyPets />} />
+							<Route
+								path="/profile"
+								element={
+									<AuthRoute>
+										<Profile />
+									</AuthRoute>
+								}
+							/>
 						</Routes>
 					</div>
 				</div>
-			</AuthProvider>
-		</LoginModalProvider>
+				<AuthModal />
+			</LoginModalProvider>
+		</AuthProvider>
 	)
 }
 

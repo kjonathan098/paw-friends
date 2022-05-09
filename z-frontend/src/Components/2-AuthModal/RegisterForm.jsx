@@ -1,40 +1,15 @@
 import {Badge, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Flex, Stack, useColorModeValue, Heading, Text, Box, HStack, FormControl, FormLabel, Input, InputGroup, InputRightElement, Button, Link} from '@chakra-ui/react'
 import {ViewIcon, ViewOffIcon} from '@chakra-ui/icons'
 import axios from 'axios'
-
+import useRegistrationInput from '../y-CustomHooks/registrationInputs'
 import React, {useState} from 'react'
 
 const RegisterForm = ({switchFormContent}) => {
 	const [showPassword, setShowPassword] = useState(false)
-	const [name, setName] = useState()
-	const [lastName, setLastName] = useState()
-	const [email, setEmail] = useState()
-	const [password, setPassword] = useState()
-	const [rePassword, setRePassword] = useState()
-	const [phone, setPhone] = useState()
 	const [error, setError] = useState()
 	const [success, setSucces] = useState()
 
-	const handleInput = {
-		name: (e) => {
-			setName(e.target.value)
-		},
-		lastName: (e) => {
-			setLastName(e.target.value)
-		},
-		email: (e) => {
-			setEmail(e.target.value)
-		},
-		password: (e) => {
-			setPassword(e.target.value)
-		},
-		rePassword: (e) => {
-			setRePassword(e.target.value)
-		},
-		phone: (e) => {
-			setPhone(e.target.value)
-		},
-	}
+	const {nameInput, lastNameInput, emailInput, passwordInput, rePasswordInput, phoneInput, lastName, email, name, password, rePassword, phone} = useRegistrationInput()
 
 	const registerNewUser = async () => {
 		setError('')
@@ -73,29 +48,29 @@ const RegisterForm = ({switchFormContent}) => {
 							<Box>
 								<FormControl id="firstName" isRequired>
 									<FormLabel>First Name</FormLabel>
-									<Input type="text" onChange={handleInput.name} />
+									<Input type="text" onChange={nameInput} />
 								</FormControl>
 							</Box>
 							<Box>
 								<FormControl id="lastName" isRequired>
 									<FormLabel>Last Name</FormLabel>
-									<Input type="text" onChange={handleInput.lastName} />
+									<Input type="text" onChange={lastNameInput} />
 								</FormControl>
 							</Box>
 						</HStack>
 						<FormControl id="email" isRequired>
 							<FormLabel>Email address</FormLabel>
-							<Input type="email" onChange={handleInput.email} />
+							<Input type="email" onChange={emailInput} />
 						</FormControl>
 						<FormControl id="email" isRequired>
 							<FormLabel>Phone Number</FormLabel>
-							<Input type="email" onChange={handleInput.phone} />
+							<Input type="email" onChange={phoneInput} />
 						</FormControl>
 
 						<FormControl id="password" isRequired>
 							<FormLabel>Password</FormLabel>
 							<InputGroup>
-								<Input type={showPassword ? 'text' : 'password'} onChange={handleInput.password} />
+								<Input type={showPassword ? 'text' : 'password'} onChange={passwordInput} />
 								<InputRightElement h={'full'}>
 									<Button variant={'ghost'} onClick={() => setShowPassword((showPassword) => !showPassword)}>
 										{showPassword ? <ViewIcon /> : <ViewOffIcon />}
@@ -106,7 +81,7 @@ const RegisterForm = ({switchFormContent}) => {
 						<FormControl id="rePassword" isRequired>
 							<FormLabel> Re-Password</FormLabel>
 							<InputGroup>
-								<Input type={showPassword ? 'text' : 'password'} onChange={handleInput.rePassword} />
+								<Input type={showPassword ? 'text' : 'password'} onChange={rePasswordInput} />
 								<InputRightElement h={'full'}>
 									<Button variant={'ghost'} onClick={() => setShowPassword((showPassword) => !showPassword)}>
 										{showPassword ? <ViewIcon /> : <ViewOffIcon />}

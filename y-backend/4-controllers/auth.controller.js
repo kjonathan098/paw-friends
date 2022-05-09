@@ -56,6 +56,9 @@ const login = async (req, res, next) => {
 
 	// Create Tokens
 	const tokens = jwtLib.createTokens(user)
+	tokens.name = user.name
+	tokens.surName = user.surName
+	tokens.uid = user._id
 
 	return res.send(tokens)
 }

@@ -9,7 +9,7 @@ const _ = require('lodash')
 const authServices = require('../5-services/auth.service')
 
 const formUserObj = (body) => {
-	let userObj = _.pick(body, ['name', 'surName', 'email', 'password', 'phone', 'permissions'])
+	let userObj = _.pick(body, ['name', 'surName', 'email', 'password', 'phone', 'permissions', 'bio'])
 	return userObj
 }
 
@@ -53,7 +53,7 @@ const editProfile = async (req, res, next) => {
 	if (error) return next(errorHandler.joiValidationFailed(error))
 
 	// create obj with any fields filled
-	const editUser = formUserObj(req.body)
+	const editUser = formUserObj(editedRequest)
 
 	// if user sent new email validate that it doesnt exist in DB
 	if (editUser.email) {
