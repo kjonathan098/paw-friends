@@ -10,10 +10,14 @@ const DisplayPets = () => {
 				<TabList justifyContent={'center'}>
 					<Tab>Search Pets</Tab>
 					<Tab>My Pets</Tab>
+					<Tab>My Favorites</Tab>
 				</TabList>
 				<TabPanels>
 					<TabPanel>
 						<SearchPets />
+					</TabPanel>
+					<TabPanel>
+						<MyPets />
 					</TabPanel>
 					<TabPanel>
 						<MyPets />

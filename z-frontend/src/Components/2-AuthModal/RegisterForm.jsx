@@ -3,11 +3,13 @@ import {ViewIcon, ViewOffIcon} from '@chakra-ui/icons'
 import axios from 'axios'
 import useRegistrationInput from '../y-CustomHooks/registrationInputs'
 import React, {useState} from 'react'
+import {useToast} from '@chakra-ui/react'
 
 const RegisterForm = ({switchFormContent}) => {
 	const [showPassword, setShowPassword] = useState(false)
 	const [error, setError] = useState()
 	const [success, setSucces] = useState()
+	const toast = useToast()
 
 	const {nameInput, lastNameInput, emailInput, passwordInput, rePasswordInput, phoneInput, lastName, email, name, password, rePassword, phone} = useRegistrationInput()
 
@@ -23,7 +25,14 @@ const RegisterForm = ({switchFormContent}) => {
 				rePassword,
 				phone,
 			})
-			console.log('registered')
+			toast({
+				title: 'Account created.',
+				description: 'Please login',
+				status: 'success',
+				duration: 5000,
+				isClosable: true,
+			})
+
 			switchFormContent()
 		} catch (error) {
 			setError(error.response.data.message)

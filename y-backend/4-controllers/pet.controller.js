@@ -23,7 +23,6 @@ const addPet = async (req, res, next) => {
 
 const findAll = async (req, res) => {
 	// Get all pets from DB
-	console.log(req.query)
 	const pets = await petServices.getAll()
 	return res.send(pets)
 }
@@ -121,8 +120,6 @@ const deletePet = async (req, res, next) => {
 
 const findUserPets = async (req, res, next) => {
 	userId = req.params.id
-
-	console.log('hello')
 
 	// Get list of adopte pets and favorited pets
 	const adoptedPets = await petServices.findUserStoredPets(userId)

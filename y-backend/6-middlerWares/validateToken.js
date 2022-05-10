@@ -6,7 +6,12 @@ const {jwtLib} = require('../8-lib/jwt.lib')
 const validateToken = async (req, res, next) => {
 	if (['/api/users/login', '/api/auth/register'].includes(req.url)) return next()
 
+	console.log(req.headers)
+	req.bo
+	console.log('henlo')
+
 	const token = req.header('Authorization')
+	console.log(token, 'tokennnn')
 	if (!token) return next(errorHandler.needToLogin())
 
 	// verify token
