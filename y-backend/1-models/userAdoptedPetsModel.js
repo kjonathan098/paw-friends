@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
 
-const userAdoptPetsSchema = mongoose.Schema({
+const userSavePetsSchema = mongoose.Schema({
 	uid: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	adoptedPet: [{type: mongoose.Schema.Types.ObjectId, ref: 'Pets', required: true}],
+	favoritePet: [{type: mongoose.Schema.Types.ObjectId, ref: 'Pets'}],
 })
-const AdoptPet = mongoose.model('user.Adopted.Pet', userAdoptPetsSchema)
-exports.AdoptPet = AdoptPet
+const SavePet = mongoose.model('user.Pets', userSavePetsSchema)
+exports.SavePet = SavePet

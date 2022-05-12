@@ -12,9 +12,10 @@ const petSchema = mongoose.Schema({
 		minlength: 1,
 	},
 	adoptionStatus: {
-		type: String,
+		type: Number,
 		required: true,
-		minlength: 1,
+		default: 0,
+		max: 3,
 	},
 	picture: {
 		type: String,

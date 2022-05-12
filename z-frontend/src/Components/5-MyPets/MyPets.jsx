@@ -6,7 +6,7 @@ import {Box, Center, useColorModeValue, Heading, Text, Stack, Image, SimpleGrid}
 import {Grid, GridItem} from '@chakra-ui/react'
 import ViewMoreButton from '../../UI_Kit/ViewMoreButton'
 import ErrorAlert from '../../UI_Kit/ErrorAlert'
-import MyPetsCards from './MyPetsCards'
+import MyPetsCards from '../4-Pets/PetsCards'
 
 const MyPets = () => {
 	const authData = useContext(authContext)

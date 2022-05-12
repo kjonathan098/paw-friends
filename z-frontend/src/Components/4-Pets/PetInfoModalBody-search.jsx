@@ -4,15 +4,19 @@ import {useEffect} from 'react'
 import {useState} from 'react'
 import {useToast} from '@chakra-ui/react'
 
-export default function PetInfoModalBody({pet, status}) {
+export default function SearchAllModalBody({pet, status}) {
 	const toast = useToast()
 
 	const [adopted, setAdopted] = useState(false)
 	const [fostered, setFostered] = useState(false)
+	const [petUnavailable, setpetUnavailable] = useState(false)
+	console.log(pet.adoptionStatus)
+	console.log(petUnavailable)
 
 	useEffect(() => {
-		if (pet.adoptionStatus === 'adopt') setAdopted(true)
-		else setFostered(true)
+		if (pet.adoptionStatus === 2 || 1) {
+			setpetUnavailable(true)
+		} else setpetUnavailable(false)
 	}, [])
 
 	const returnPet = async () => {
@@ -59,7 +63,7 @@ export default function PetInfoModalBody({pet, status}) {
 					</Stack>
 
 					<Stack width={'100%'} mt={'2rem'} direction={'row'} padding={2} justifyContent={'space-between'} alignItems={'center'}>
-						<Button
+						{/* <Button
 							flex={1}
 							fontSize={'sm'}
 							rounded={'full'}
@@ -68,26 +72,25 @@ export default function PetInfoModalBody({pet, status}) {
 							}}
 							onClick={returnPet}
 						>
-							Return
+							Foster
 						</Button>
-						{fostered && (
-							<Button
-								flex={1}
-								fontSize={'sm'}
-								rounded={'full'}
-								bg={'green.400'}
-								color={'white'}
-								boxShadow={'0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'}
-								_hover={{
-									bg: 'green.500',
-								}}
-								_focus={{
-									bg: 'green.500',
-								}}
-							>
-								Adopt
-							</Button>
-						)}
+						<Button
+							flex={1}
+							fontSize={'sm'}
+							rounded={'full'}
+							bg={'green.400'}
+							color={'white'}
+							boxShadow={'0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'}
+							_hover={{
+								bg: 'green.500',
+							}}
+							_focus={{
+								bg: 'green.500',
+							}}
+						>
+							Adopt
+						</Button> */}
+						{petUnavailable && <Badge colorScheme="yellow">Pet already in a cozy home!</Badge>}
 					</Stack>
 				</Stack>
 			</Stack>

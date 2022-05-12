@@ -1,4 +1,5 @@
 const {petErrorHandler} = require('../7-config/petErrorConfig')
+const {successHandler} = require('../7-config/petSuccessConfig')
 const {validatePet, validateEditedPet} = require('../2-joiValidations/petValidation')
 const {joiValidateService} = require('../5-services/joi.validate.serivces')
 const petServices = require('../5-services/pet.service')
@@ -31,6 +32,7 @@ const findOne = async (req, res, next) => {
 	// Get specific Pet
 	const pet = await petServices.getOne(req.params.id)
 	if (!pet) return next(petErrorHandler.notFound())
+
 	return res.send(pet)
 }
 
@@ -47,8 +49,8 @@ const adoptFoster = async (req, res, next) => {
 
 	// if pet exist check for status
 	const statusCheck = petServices.checkStatus(pet.adoptionStatus, userRequest)
-	if (statusCheck === 'adopted') return next(petErrorHandler.alreadyAdopted())
-	if (statusCheck === 'fostered') return next(petErrorHandler.alreadyFostered())
+	if (statusCheck === 'Adopted') return next(petErrorHandler.alreadyAdopted())
+	if (statusCheck === 'Fostered') return next(petErrorHandler.alreadyFostered())
 	if (statusCheck === 'changeOwner') await petServices.changeOwner(petId, petId)
 
 	// Find if user already has a Doc & Update
@@ -65,7 +67,7 @@ const adoptFoster = async (req, res, next) => {
 	// Update status of pet
 	await petServices.changePetStatus(petId, userRequest)
 
-	return res.send(`Pet added to your ${userRequest} list`)
+	return res.send(`Pet added to your ${statusCheck} list`)
 }
 
 const editPet = async (req, res, next) => {
@@ -95,17 +97,18 @@ const returnPet = async (req, res, next) => {
 }
 
 const savePet = async (req, res, next) => {
+	console.log(req.user.uid)
 	petId = req.params.id
 	uid = req.user.uid
 
-	const updDoc = await petServices.genericFunction(FavoritePet, uid, petId)
+	const updDoc = await petServices.saveFavoritePet(uid, petId)
 
 	if (!updDoc) {
-		const createDoc = await petServices.saveFirstPetGeneric(FavoritePet, uid, petId)
+		const createDoc = await petServices.saveFirstFavoritePet(uid, petId)
 		return res.send(createDoc)
 	}
 
-	return res.send(updDoc)
+	return res.send(successHandler.petRequestSuccess('Pet added to your favorited list'))
 }
 
 const deletePet = async (req, res, next) => {
@@ -115,7 +118,7 @@ const deletePet = async (req, res, next) => {
 	// Remove pet reference from user's list
 	const updDoc = await petServices.removePetFromList(uid, petId)
 
-	return res.send(updDoc)
+	return res.send(successHandler.petRequestSuccess('Pet removed from your favorited list'))
 }
 
 const findUserPets = async (req, res, next) => {
