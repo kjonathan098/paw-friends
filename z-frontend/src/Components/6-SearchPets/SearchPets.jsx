@@ -6,18 +6,16 @@ import {Box, Center, useColorModeValue, Heading, Text, Stack, Image, SimpleGrid}
 import {Grid, GridItem} from '@chakra-ui/react'
 import ViewMoreButton from '../../UI_Kit/ViewMoreButton'
 import ErrorAlert from '../../UI_Kit/ErrorAlert'
-import MyPetsCards from '../4-Pets/PetsCards'
+import PetsCards from '../4-Pets/PetsCards'
 
 const IMAGE = 'https://source.unsplash.com/yihlaRCCvd4'
 
 const SearchPets = () => {
 	const [pets, setPets] = useState()
-	console.log(pets)
 	useEffect(() => {
 		const fetchPets = async () => {
 			try {
 				const res = await axios.get(`http://localhost:4000/api/pet/`, {headers: {Authorization: localStorage.getItem('access_token')}})
-				console.log(res)
 				setPets(res.data)
 			} catch (error) {
 				console.log(error.message)
@@ -30,7 +28,7 @@ const SearchPets = () => {
 			<SimpleGrid columns={{sm: 1, md: 2, lg: 3}} mt={'10'} bg={'white'} spacing="8">
 				{pets &&
 					pets.map((pet) => {
-						return <MyPetsCards pet={pet} />
+						return <PetsCards pet={pet} />
 					})}
 			</SimpleGrid>
 		</Center>

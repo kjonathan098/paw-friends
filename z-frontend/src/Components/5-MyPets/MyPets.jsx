@@ -6,34 +6,35 @@ import {Box, Center, useColorModeValue, Heading, Text, Stack, Image, SimpleGrid}
 import {Grid, GridItem} from '@chakra-ui/react'
 import ViewMoreButton from '../../UI_Kit/ViewMoreButton'
 import ErrorAlert from '../../UI_Kit/ErrorAlert'
-import MyPetsCards from '../4-Pets/PetsCards'
+import PetsCards from '../4-Pets/PetsCards'
+import {userPetsContext} from '../../Context/UserPetsContext'
 
 const MyPets = () => {
 	const authData = useContext(authContext)
-	const [userPets, setUserPets] = useState()
+	const [userPets, setUserPets] = useState(false)
+	const [loading, setLoading] = useState(false)
+
+	const {userAdoptedPets} = useContext(userPetsContext)
 
 	useEffect(() => {
-		const fetchUserPets = async () => {
-			let userInfo = localStorage.getItem('user_info')
-			userInfo = JSON.parse(userInfo)
-			try {
-				const res = await axios.get(`http://localhost:4000/api/pet/userPets/${userInfo.uid}`)
-				setUserPets(res.data.adoptedPets)
-			} catch (error) {
-				console.log(error.message)
-			}
-		}
-		fetchUserPets()
-	}, [])
+		setLoading(true)
+		if (!userAdoptedPets) return setLoading(false)
 
-	if (!userPets) return <div>No Pets</div>
+		if (userAdoptedPets.length) setUserPets(true)
+		setLoading(false)
+		return () => {}
+	}, [userAdoptedPets])
+
+	if (loading) return <div>Loading</div>
+
+	if (!userAdoptedPets || userAdoptedPets.length <= 0) return <div>No Pets</div>
 
 	return (
 		<Center>
 			<SimpleGrid columns={{sm: 1, md: 2, lg: 3}} mt={'10'} bg={'white'} spacing="8">
-				{userPets &&
-					userPets.map((pet) => {
-						return <MyPetsCards pet={pet} />
+				{userAdoptedPets &&
+					userAdoptedPets.map((pet) => {
+						return <PetsCards pet={pet} />
 					})}
 			</SimpleGrid>
 		</Center>

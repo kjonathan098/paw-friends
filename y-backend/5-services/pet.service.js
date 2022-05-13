@@ -27,7 +27,7 @@ const getOne = async (id) => {
 }
 
 const changePetStatus = async (petId, userRequest) => {
-	await Pet.findByIdAndUpdate({_id: petId}, {adoptionStatus: userRequest ? userRequest : 'Available'})
+	await Pet.findByIdAndUpdate({_id: petId}, {adoptionStatus: userRequest})
 	return true
 }
 
@@ -100,19 +100,9 @@ const removePetFromList = async (uid, petId) => {
 // FIND USER'S ADOPTED AND FAVORITED PETS
 const findUserStoredPets = async (userId) => {
 	// find adopted pets and populate
-	let adoptedPets = await SavePet.findOne({uid: userId}).populate('adoptedPet').populate('uid', 'name , -_id')
+	let adoptedPets = await SavePet.findOne({uid: userId}).populate('adoptedPet').populate('uid', 'name , _id').populate('favoritePet').populate('uid', 'name , _id')
 
-	// find favorite pets and populate
-	const favoritePets = await FavoritePet.findOne({uid: userId}).populate('favoritePet')
-
-	// Join the favorite pets to obj
-	const newObj = {
-		userName: adoptedPets.uid.name,
-		adoptedPets: adoptedPets.adoptedPet,
-		// favoritePets: favoritePets.favoritePet,
-	}
-
-	return newObj
+	return adoptedPets
 }
 
 const getFullUser = async (uid) => {

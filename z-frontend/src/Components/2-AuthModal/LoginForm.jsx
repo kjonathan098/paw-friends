@@ -6,12 +6,16 @@ import {useContext} from 'react'
 import {loginModalContext} from '../../Context/LoginModalContext'
 import {useNavigate} from 'react-router-dom'
 import useLoginInput from '../y-CustomHooks/loginInputs'
+import {userPetsContext} from '../../Context/UserPetsContext'
 
 export default function LoginForm({switchFormContent}) {
 	const [error, setError] = useState()
+	const [loading, setLoading] = useState(false)
+	const {getUserPets} = useContext(userPetsContext)
 
 	// auth context
 	const isLoggedIn = useContext(authContext)
+	const context = useContext(userPetsContext)
 	const loginModalSwitcher = useContext(loginModalContext)
 	const navigate = useNavigate('/')
 
@@ -19,22 +23,32 @@ export default function LoginForm({switchFormContent}) {
 
 	const handleLogin = async () => {
 		try {
+			setLoading(true)
 			const res = await axios.post('http://localhost:4000/api/auth/login', {email, password})
 
 			console.log(res)
-			
-			//extract tokens and set them in local
+
+			//extract info and set them in local
 			const access_token = res.data.acces_token
 			const refresh_token = res.data.refresh_token
+			const userInfo = {name: res.data.name, surName: res.data.surName, uid: res.data.uid}
 
-			const userInfo = {name: res.data.name, surName: res.data.surName , uid:res.data.uid} 
+			// save in local storage
 			isLoggedIn.handdleLogin(access_token, refresh_token, userInfo)
+
+			// Fetch User's pets and set them in global context
+
+			// close modal
 			loginModalSwitcher.onClose(true)
+
+			getUserPets(res.data.uid)
+
+			setLoading(false)
 			navigate('/')
 		} catch (error) {
 			// setError(error.response.data.message)
+			setLoading(false)
 			setError('Error')
-			console.log(error)
 		}
 	}
 
@@ -70,6 +84,7 @@ export default function LoginForm({switchFormContent}) {
 									bg: 'green.500',
 								}}
 								onClick={handleLogin}
+								isLoading={loading}
 							>
 								Sign in
 							</Button>

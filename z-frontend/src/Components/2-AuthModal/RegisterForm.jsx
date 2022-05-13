@@ -9,11 +9,13 @@ const RegisterForm = ({switchFormContent}) => {
 	const [showPassword, setShowPassword] = useState(false)
 	const [error, setError] = useState()
 	const [success, setSucces] = useState()
+	const [loading, setLoading] = useState()
 	const toast = useToast()
 
 	const {nameInput, lastNameInput, emailInput, passwordInput, rePasswordInput, phoneInput, lastName, email, name, password, rePassword, phone} = useRegistrationInput()
 
 	const registerNewUser = async () => {
+		setLoading(true)
 		setError('')
 		if (password !== rePassword) return setError('passwords do not match ')
 		try {
@@ -32,11 +34,13 @@ const RegisterForm = ({switchFormContent}) => {
 				duration: 5000,
 				isClosable: true,
 			})
+			setLoading(false)
 
 			switchFormContent()
 		} catch (error) {
 			setError(error.response.data.message)
 			console.log(error, 'error')
+			setLoading(false)
 		}
 	}
 
@@ -118,6 +122,7 @@ const RegisterForm = ({switchFormContent}) => {
 									bg: 'green.500',
 								}}
 								onClick={registerNewUser}
+								isLoading={loading}
 							>
 								Sign up
 							</Button>

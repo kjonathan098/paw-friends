@@ -85,19 +85,19 @@ const editPet = async (req, res, next) => {
 const returnPet = async (req, res, next) => {
 	const uid = req.user.uid
 	const petId = req.params.id
+	const userRequest = 0
 
 	// Remove pet reference from user's list
 	const response = await petServices.returnPet(petId, uid)
 	if (!response) next(petErrorHandler.petNotInList())
 
 	// Change pet status on DB
-	await petServices.changePetStatus(petId)
+	await petServices.changePetStatus(petId, userRequest)
 
 	return res.send(response)
 }
 
 const savePet = async (req, res, next) => {
-	console.log(req.user.uid)
 	petId = req.params.id
 	uid = req.user.uid
 

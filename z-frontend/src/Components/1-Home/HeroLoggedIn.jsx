@@ -4,10 +4,11 @@ import {useContext, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {authContext} from '../../Context/AuthContext'
 import hero4 from '../z-Images/hero4.jpeg'
+import {userPetsContext} from '../../Context/UserPetsContext'
 
 export default function HeroLoggedIn() {
 	const {userInfo} = useContext(authContext)
-	
+	const {name} = useContext(userPetsContext)
 
 	const navigate = useNavigate()
 
