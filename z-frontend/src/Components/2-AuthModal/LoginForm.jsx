@@ -5,7 +5,7 @@ import {authContext} from '../../Context/AuthContext'
 import {useContext} from 'react'
 import {loginModalContext} from '../../Context/LoginModalContext'
 import {useNavigate} from 'react-router-dom'
-import useLoginInput from '../y-CustomHooks/loginInputs'
+import useLoginInput from '../../CustomHooks/loginInputs'
 import {userPetsContext} from '../../Context/UserPetsContext'
 
 export default function LoginForm({switchFormContent}) {
@@ -25,8 +25,6 @@ export default function LoginForm({switchFormContent}) {
 		try {
 			setLoading(true)
 			const res = await axios.post('http://localhost:4000/api/auth/login', {email, password})
-
-			console.log(res)
 
 			//extract info and set them in local
 			const access_token = res.data.acces_token

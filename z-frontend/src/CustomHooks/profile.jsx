@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {useContext, useState} from 'react'
-import {authContext} from '../../Context/AuthContext'
+import {authContext} from '../Context/AuthContext'
 import axios from 'axios'
 
 const useProfileHook = () => {
@@ -12,7 +12,6 @@ const useProfileHook = () => {
 	const [bio, setBio] = useState()
 
 	useEffect(() => {
-		console.log('helloooo')
 		const fetchUser = async () => {
 			const user = await axios.get(`http://localhost:4000/api/user/${userInfo.uid}`)
 			setEmail(user.data.email)

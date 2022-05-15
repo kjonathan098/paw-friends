@@ -8,6 +8,7 @@ import ViewMoreButton from '../../UI_Kit/ViewMoreButton'
 import ErrorAlert from '../../UI_Kit/ErrorAlert'
 import PetsCards from '../4-Pets/PetsCards'
 import {userPetsContext} from '../../Context/UserPetsContext'
+import AnewPetsCards from '../4-Pets/A.newPetCardsGrid'
 
 const MyPets = () => {
 	const authData = useContext(authContext)
@@ -34,7 +35,7 @@ const MyPets = () => {
 			<SimpleGrid columns={{sm: 1, md: 2, lg: 3}} mt={'10'} bg={'white'} spacing="8">
 				{userAdoptedPets &&
 					userAdoptedPets.map((pet) => {
-						return <PetsCards pet={pet} />
+						return <AnewPetsCards pet={pet} />
 					})}
 			</SimpleGrid>
 		</Center>

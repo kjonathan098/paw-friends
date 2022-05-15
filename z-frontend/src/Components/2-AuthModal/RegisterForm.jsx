@@ -1,7 +1,7 @@
 import {Badge, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Flex, Stack, useColorModeValue, Heading, Text, Box, HStack, FormControl, FormLabel, Input, InputGroup, InputRightElement, Button, Link} from '@chakra-ui/react'
 import {ViewIcon, ViewOffIcon} from '@chakra-ui/icons'
 import axios from 'axios'
-import useRegistrationInput from '../y-CustomHooks/registrationInputs'
+import useRegistrationInput from '../../CustomHooks/registrationInputs'
 import React, {useState} from 'react'
 import {useToast} from '@chakra-ui/react'
 

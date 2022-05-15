@@ -6,7 +6,7 @@ import {authContext} from '../../Context/AuthContext'
 import AuthProvider from '../../Context/AuthProvider'
 import axios from 'axios'
 import {Button, Flex, FormControl, FormLabel, Heading, Input, Stack, useColorModeValue, HStack, Avatar, AvatarBadge, IconButton, Center, Badge} from '@chakra-ui/react'
-import useProfileHook from '../y-CustomHooks/profile'
+import useProfileHook from '../../CustomHooks/profile'
 
 const Profile = () => {
 	const authData = useContext(authContext)

@@ -5,7 +5,9 @@ const handlePetRequest = {
 		try {
 			const res = await axios.post(`http://localhost:4000/api/pet/${pet._id}/return`, {request: 'return'}, {headers: {Authorization: localStorage.getItem('access_token')}})
 			return true
-		} catch (error) {}
+		} catch (error) {
+			return {error: true, message: error.response.data}
+		}
 	},
 	adoptPet: async (pet) => {
 		try {

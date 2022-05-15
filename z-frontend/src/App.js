@@ -5,6 +5,7 @@ import LoginModalProvider from '../src/Context/LoginModalProvider'
 import {loginModalContext} from './Context/LoginModalContext'
 import {useContext, useEffect, useState} from 'react'
 import AuthProvider from './Context/AuthProvider'
+import PetsContextProvider from './Context/PetsContextProvider'
 import {authContext} from './Context/AuthContext'
 import HomeLogin from './Components/1-Home/HomeLogin'
 import AuthModal from './Components/2-AuthModal/AuthModal'
@@ -12,19 +13,18 @@ import AuthRoute from './Components/3-AuthRoute/AuthRoute'
 import NavLoggedIn from './Components/NavBarLoggedIn/navLoggedIn'
 import {Center, Flex, Box} from '@chakra-ui/react'
 import MyPets from './Components/5-MyPets/MyPets'
-import Profile from './Components/7-Profile/Profile'
+import Profile from './Components/8-Profile/Profile'
 import LoginButton from './UI_Kit/LoginButton'
 import DisplayPets from './Components/4-Pets/DisplayPets'
 import UserPetsProvider from './Context/UserPetsProvider'
-
+import NewPetDisplayMain from './Components/4-Pets/A.newPetMain'
 function App() {
 	const [userLoggedIn, setUserLoggedIn] = useState()
-	const modalSwitcher = useContext(loginModalContext)
 
 	return (
-		<Box>
-			<AuthProvider>
-				<LoginModalProvider>
+		<AuthProvider>
+			<LoginModalProvider>
+				<PetsContextProvider>
 					<UserPetsProvider>
 						<div className="App">
 							<Flex alignItems={'center'}>
@@ -53,7 +53,14 @@ function App() {
 										}
 									/>
 									<Route path="/login" element={<HomeLogout />} />
-									<Route path="/pets" element={<DisplayPets />} />
+									<Route
+										path="/pets"
+										element={
+											<AuthRoute>
+												<NewPetDisplayMain />
+											</AuthRoute>
+										}
+									/>
 									<Route path="/myPets" element={<MyPets />} />
 									<Route
 										path="/profile"
@@ -68,9 +75,9 @@ function App() {
 						</div>
 						<AuthModal />
 					</UserPetsProvider>
-				</LoginModalProvider>
-			</AuthProvider>
-		</Box>
+				</PetsContextProvider>
+			</LoginModalProvider>
+		</AuthProvider>
 	)
 }
 
