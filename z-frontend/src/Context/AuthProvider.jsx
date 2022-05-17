@@ -6,7 +6,7 @@ import {useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 
 const AuthProvider = ({children}) => {
-	const [isLoggedIn, setIsLoggedIn] = useState(false)
+	const [isLoggedIn, setIsLoggedIn] = useState()
 	const [isLoading, setIsLoading] = useState(false)
 	const [userInfo, setUserInfo] = useState()
 	const navigate = useNavigate()

@@ -6,7 +6,9 @@ import {useDisclosure} from '@chakra-ui/react'
 const LoginModalProvider = ({children}) => {
 	const {isOpen, onOpen, onClose} = useDisclosure()
 
-	return <loginModalContext.Provider value={{isOpen, onOpen, onClose}}>{children}</loginModalContext.Provider>
+	const test = 'test'
+
+	return <loginModalContext.Provider value={{isOpen, onOpen, onClose, test}}>{children}</loginModalContext.Provider>
 }
 
 export default LoginModalProvider

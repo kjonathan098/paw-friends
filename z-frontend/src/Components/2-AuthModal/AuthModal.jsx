@@ -7,7 +7,12 @@ import axios from 'axios'
 
 const AuthModal = () => {
 	const [modalContent, setModalContent] = useState(true)
-	const {isOpen, onClose} = useContext(loginModalContext)
+	const {isOpen, test, onClose} = useContext(loginModalContext)
+
+	console.log('test')
+
+	console.log(test)
+	console.log(isOpen)
 
 	// Close Modal from click Event when modal is Opened
 	const switchFormContent = () => {
