@@ -111,4 +111,8 @@ const getFullUser = async (uid) => {
 	return user
 }
 
+const queryHandler = async (qobject) => {
+	
+}
+
 module.exports = {addPet, getAll, getOne, findUserPetsAndUpd, changePetStatus, adoptFirstPet, editPet, returnPet, changeOwner, checkStatus, saveFavoritePet, saveFirstFavoritePet, removePetFromList, findUserStoredPets, getFullUser}

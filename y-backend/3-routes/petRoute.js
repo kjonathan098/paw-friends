@@ -10,7 +10,7 @@ const router = express.Router()
 router.post('/', validateToken, setPermissions, petController.addPet)
 
 // FIND ALL
-router.get('/', validateToken, petController.findAll)
+router.get('/', petController.findAll)
 
 // FIND ONE
 router.get('/:id', petController.findOne)

@@ -2,9 +2,9 @@ const mongoose = require('mongoose')
 
 const petSchema = mongoose.Schema({
 	type: {
-		type: String,
+		type: Number,
 		required: true,
-		minlength: 3,
+		max: 2,
 	},
 	name: {
 		type: String,

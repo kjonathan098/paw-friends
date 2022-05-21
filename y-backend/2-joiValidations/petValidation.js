@@ -2,7 +2,7 @@ const Joi = require('Joi')
 
 const validatePet = (object) => {
 	const schema = Joi.object({
-		type: Joi.string().min(1).required(),
+		type: Joi.number().min(2).required(),
 		name: Joi.string().min(3).required(),
 		adoptionStatus: Joi.number().max(2).required(),
 		picture: Joi.string().min(3).required(),
