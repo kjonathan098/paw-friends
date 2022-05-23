@@ -10,12 +10,12 @@ const PetsProvider = ({children}) => {
 	const {isLoggedIn, userInfo} = useContext(authContext)
 	const [userAdoptedPet, setUserAdoptedPet] = useState([])
 	const [userFavorites, setUserFavorites] = useState([])
-	const [loadingUserPets, setLoadingUserPets] = useState()
+	const [loadingUserPets, setLoadingUserPets] = useState(true)
 	const [allPets, setAllPets] = useState([])
 	const [e, setError] = useState()
 
 	// fetch all pets
-	const {data: pets, fetchLoading, error, reFetch} = useFetch('http://localhost:4000/api/pet/')
+	const {data: pets, fetchLoading, error, reFetch, setData} = useFetch('http://localhost:4000/api/pet/')
 
 	// Fetch users Pets
 	const fetchUserPets = async () => {
@@ -30,22 +30,27 @@ const PetsProvider = ({children}) => {
 		}
 	}
 
-		// Change Pets display according to query
-		const fetchDogs =  () => {
-
+	// Change Pets display according to query
+	const fetchQuery = async (qObject) => {
+		try {
+			console.log('enetered')
+			const qResponse = await axios.get(`http://localhost:4000/api/pet/test`, qObject)
+			console.log(qResponse.data)
+			setAllPets(qResponse.data)
+		} catch (error) {
+		} finally {
 		}
-
+	}
 
 	useEffect(() => {
-		console.log(pets, 'petssss')
-		setLoadingUserPets(true)
+		console.log(fetchLoading, 'prov')
 		if (!pets) return setLoadingUserPets(false)
 		setAllPets([...pets.data])
 		if (!isLoggedIn) return setLoadingUserPets(false)
 		fetchUserPets()
 	}, [isLoggedIn, pets])
 
-	return <petsContext.Provider value={{userAdoptedPet, setUserAdoptedPet, userFavorites, setUserFavorites, loadingUserPets, allPets, setAllPets}}>{children}</petsContext.Provider>
+	return <petsContext.Provider value={{fetchLoading, userAdoptedPet, setUserAdoptedPet, userFavorites, setUserFavorites, loadingUserPets, allPets, setAllPets, fetchQuery}}>{children}</petsContext.Provider>
 }
 
 export default PetsProvider

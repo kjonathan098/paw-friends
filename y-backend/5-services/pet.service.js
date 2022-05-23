@@ -21,6 +21,12 @@ const getAll = async () => {
 	const pets = await Pet.find()
 	return pets
 }
+
+const queryHandler = async (query) => {
+	const qResponse = await Pet.find(query)
+	return qResponse
+}
+
 const getOne = async (id) => {
 	const pet = await Pet.findById(id)
 	return pet
@@ -111,8 +117,4 @@ const getFullUser = async (uid) => {
 	return user
 }
 
-const queryHandler = async (qobject) => {
-	
-}
-
-module.exports = {addPet, getAll, getOne, findUserPetsAndUpd, changePetStatus, adoptFirstPet, editPet, returnPet, changeOwner, checkStatus, saveFavoritePet, saveFirstFavoritePet, removePetFromList, findUserStoredPets, getFullUser}
+module.exports = {addPet, getAll, getOne, findUserPetsAndUpd, changePetStatus, adoptFirstPet, editPet, returnPet, changeOwner, checkStatus, saveFavoritePet, saveFirstFavoritePet, removePetFromList, findUserStoredPets, getFullUser, queryHandler}

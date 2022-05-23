@@ -2,11 +2,13 @@ import {Box, Heading, Text, Stack, Image, Modal, useDisclosure, Skeleton, ModalO
 import React, {useState} from 'react'
 import {useEffect} from 'react'
 import usePetStatus from '../../CustomHooks/PetManipulation/usePetStatus'
+import usePetStatusTwo from '../../CustomHooks/PetManipulation/usePetStatusTwo'
 import PetModal from './PetModal'
 const IMAGE = 'https://source.unsplash.com/yihlaRCCvd4'
 
 const PetsCardsDisplay = ({pet}) => {
 	const {isOpen, onOpen, onClose} = useDisclosure()
+
 
 	usePetStatus(pet)
 

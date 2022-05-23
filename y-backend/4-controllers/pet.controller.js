@@ -130,4 +130,14 @@ const findUserPets = async (req, res, next) => {
 	return res.send(adoptedPets)
 }
 
-module.exports = {addPet, findAll, findOne, adoptFoster, editPet, returnPet, savePet, deletePet, findUserPets}
+const handleQuery = async (req, res, next) => {
+	if (!req.query) {
+		const pets = await petServices.getAll()
+		return res.send(pets)
+	}
+	const qResponse = await petServices.queryHandler(req.query)
+
+	return res.send(qResponse)
+}
+
+module.exports = {addPet, findAll, findOne, adoptFoster, editPet, returnPet, savePet, deletePet, findUserPets, handleQuery}

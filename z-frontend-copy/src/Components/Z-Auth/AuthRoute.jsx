@@ -8,12 +8,8 @@ const AuthRoute = ({children}) => {
 
 	const navigate = useNavigate()
 
-	useEffect(() => {
-		const log = true
-
-		if (loading) return <>Loading...</>
-		if (!isLoggedIn) return navigate('/')
-	}, [])
+	if (loading) return <>Loading...</>
+	if (!isLoggedIn) return navigate('/')
 
 	return children
 }

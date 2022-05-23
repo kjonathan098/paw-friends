@@ -10,9 +10,11 @@ import useAdoptPet from '../../CustomHooks/PetManipulation/useAdoptPet'
 import showToast from '../../UI_Kit/ToastMessage'
 import useToastMessage from '../../UI_Kit/ToastMessage'
 import useModalButtons from '../../CustomHooks/PetManipulation/useModalButtons'
+import usePetStatusTwo from '../../CustomHooks/PetManipulation/usePetStatusTwo'
 
 const PetModal = ({pet, onClose}) => {
 	const {isLoggedIn, loading, userInfo} = useContext(authContext)
+
 	const [success, setSuccess] = useState()
 	const [error, setError] = useState()
 
@@ -27,8 +29,6 @@ const PetModal = ({pet, onClose}) => {
 	const {showToast, errorToast} = useToastMessage()
 
 	// console.log(fosterBtnDis)
-
-	useEffect(() => {}, [])
 
 	const handleAdoptPet = async () => {
 		if (!isLoggedIn) return onOpen()

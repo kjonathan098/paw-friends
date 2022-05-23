@@ -4,6 +4,7 @@ const {jwtLib} = require('../8-lib/jwt.lib')
 // REMEMBER TO CHANGE SECRET TO .ENV FILE and DO IT IN LIB INSTEAD
 
 const validateToken = async (req, res, next) => {
+	console.log(req.body)
 	if (['/api/users/login', '/api/auth/register'].includes(req.url)) return next()
 
 	const token = req.header('Authorization')

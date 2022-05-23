@@ -3,7 +3,7 @@ import React, {useContext, useEffect, useState} from 'react'
 
 const useFetch = (url, options) => {
 	const [data, setData] = useState(null)
-	const [fetchLoading, setLoading] = useState()
+	const [fetchLoading, setLoading] = useState(true)
 	const [error, setError] = useState()
 
 	const finalOptions = {
@@ -12,7 +12,6 @@ const useFetch = (url, options) => {
 	}
 	useEffect(() => {
 		const fetch = async () => {
-			setLoading(true)
 			try {
 				const data = await axios.get(url, {headers: {Authorization: localStorage.getItem('access_token')}})
 				setData(data)
@@ -22,7 +21,7 @@ const useFetch = (url, options) => {
 				setLoading(false)
 			}
 		}
-		if (finalOptions.enabled) fetch()
+		fetch()
 	}, [url])
 
 	const reFetch = async () => {
@@ -36,7 +35,7 @@ const useFetch = (url, options) => {
 			setLoading(false)
 		}
 	}
-	return {data, fetchLoading, error, reFetch}
+	return {data, fetchLoading, error, reFetch, setData}
 }
 
 export default useFetch

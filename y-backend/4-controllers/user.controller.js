@@ -43,6 +43,7 @@ const getFullUser = async (req, res, next) => {
 }
 
 const editProfile = async (req, res, next) => {
+	console.log('hi')
 	const editedRequest = req.body
 
 	//check that req id === token uid

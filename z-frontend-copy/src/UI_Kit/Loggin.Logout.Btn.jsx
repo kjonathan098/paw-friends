@@ -4,8 +4,10 @@ import {useContext} from 'react'
 import authContext from '../Context/AuthContext/AuthContext'
 import loginModalContext from '../Context/AuthContext/LoginModalContext/LoginModalContext'
 import userConfig from '../Config/User.Config'
-
+import {useNavigate} from 'react-router-dom'
+import AdminMain from '../Components/4-AdminPage.jsx/1-AdminRouter'
 const AuthButton = () => {
+	const navigate = useNavigate()
 	const {isLoggedIn, setLoading, setIsLoggedIn} = useContext(authContext)
 	const {isOpen, onOpen, onClose} = useContext(loginModalContext)
 	const toast = useToast()
@@ -24,6 +26,10 @@ const AuthButton = () => {
 		setLoading(false)
 	}
 
+	const admingPage = () => {
+		navigate('/admin')
+	}
+
 	if (isLoggedIn)
 		return (
 			<Menu>
@@ -31,8 +37,27 @@ const AuthButton = () => {
 					<Avatar size={'sm'} src={'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'} />
 				</MenuButton>
 				<MenuList>
-					<MenuItem>My Pets</MenuItem>
-					<MenuItem>Profile</MenuItem>
+					<MenuItem
+						onClick={() => {
+							navigate('/pets')
+						}}
+					>
+						My Pets
+					</MenuItem>
+					<MenuItem
+						onClick={() => {
+							navigate('/profile')
+						}}
+					>
+						Profile
+					</MenuItem>
+					<MenuItem
+						onClick={() => {
+							navigate('/admin')
+						}}
+					>
+						Admin Page
+					</MenuItem>
 					<MenuDivider />
 					<MenuItem>
 						<Center width={'100%'}>

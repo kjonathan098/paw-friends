@@ -10,8 +10,6 @@ const HomeRouter = () => {
 	if (loading) return <>Loading ...</>
 	if (!isLoggedIn) return <HomeNoUser />
 	if (isLoggedIn) return <HomeUser />
-
-	return <div>Home</div>
 }
 
 export default HomeRouter

@@ -4,6 +4,8 @@ const userConfig = {
 		try {
 			const res = await axios.post('http://localhost:4000/api/auth/login', values)
 
+			console.log(res)
+
 			//extract info and set them in local
 			const access_token = res.data.acces_token
 			const refresh_token = res.data.refresh_token

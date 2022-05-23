@@ -10,6 +10,8 @@ import AuthModal from './Components/Z-Auth/AuthModal'
 import LoginModalProvider from './Context/AuthContext/LoginModalContext/LoginModalProvider'
 import PetsProvider from './Context/AuthContext/PetsContext/PetsProvider'
 import HomeRouter from './Components/1-Home/HomeRouter'
+import AdminRouter from './Components/4-AdminPage.jsx/1-AdminRouter'
+import MyProfileMain from './Components/UserProfile/MyProfileMain'
 function App() {
 	return (
 		<AuthProvider>
@@ -34,6 +36,15 @@ function App() {
 							<Routes>
 								<Route path="/" element={<Home />} />
 								<Route path="/pets" element={<PetsMain />} />
+								<Route path="/admin" element={<AdminRouter />} />
+								<Route
+									path="/profile"
+									element={
+										<AuthRoute>
+											<MyProfileMain />
+										</AuthRoute>
+									}
+								/>
 							</Routes>
 						</div>
 					</div>

@@ -12,6 +12,8 @@ router.post('/', validateToken, setPermissions, petController.addPet)
 // FIND ALL
 router.get('/', petController.findAll)
 
+router.get('/test', petController.handleQuery)
+
 // FIND ONE
 router.get('/:id', petController.findOne)
 
