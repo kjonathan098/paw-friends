@@ -5,7 +5,7 @@ import authContext from './AuthContext'
 
 const AuthProvider = ({children}) => {
 	const [isLoggedIn, setIsLoggedIn] = useState()
-	const [loading, setLoading] = useState()
+	const [loading, setLoading] = useState(true)
 	const [userInfo, setUserInfo] = useState()
 
 	useEffect(() => {

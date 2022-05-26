@@ -7,7 +7,7 @@ function useModalButtons(pet) {
 	const [adoptBtnDis, setAdoptBtnDis] = useState(false)
 	const [returnBtnDis, setReturnBtnDis] = useState(true)
 
-	const {userAdoptedPet, fetchUserPets} = useContext(petsContext)
+	const {userAdoptedPet, fetchUserPets, loadingUserPets} = useContext(petsContext)
 	const {isLoggedIn} = useContext(authContext)
 
 	// isDisable
@@ -69,13 +69,14 @@ function useModalButtons(pet) {
 	}
 
 	useEffect(() => {
-		
 		if (!isLoggedIn) {
 			setFosterBtnDis(false)
 			setAdoptBtnDis(false)
 			setReturnBtnDis(true)
 			return
 		}
+
+		if (!userAdoptedPet) return btnHandler()
 		const res = userAdoptedPet.find((obj) => obj._id === pet._id)
 		btnHandler(res)
 	}, [userAdoptedPet])

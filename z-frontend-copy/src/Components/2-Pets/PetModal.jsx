@@ -20,8 +20,6 @@ const PetModal = ({pet, onClose}) => {
 
 	const {onOpen} = useContext(loginModalContext)
 
-	const petUnavailable = null
-	const adopteByUser = null
 
 	const {isFavorite, addToFavorites, removeFavorite} = useFavoritePets(pet)
 	const {fosterBtnDis, adoptBtnDis, returnBtnDis, btnHandler} = useModalButtons(pet)

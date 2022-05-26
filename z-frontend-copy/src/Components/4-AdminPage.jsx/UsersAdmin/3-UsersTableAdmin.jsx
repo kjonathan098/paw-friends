@@ -2,13 +2,12 @@ import {Center, ButtonGroup, Flex, IconButton, Table, Tbody, Td, Th, Thead, Tr, 
 import React from 'react'
 import {BsBoxArrowUpRight, BsFillTrashFill} from 'react-icons/bs'
 import {AiFillEdit, AiTwotoneLock} from 'react-icons/ai'
-import useFetch from '../../CustomHooks/apiCalls/useFetch'
+import useFetch from '../../../CustomHooks/apiCalls/useFetch'
 import UserModal from './5-UserModal'
 import UserTableBody from './4-UserTableBody'
 
 const UserTableAdmin = () => {
-	const {data: users, fetchLoading, error, reFetch, setData} = useFetch(`http://localhost:4000/api/user`)
-	const {isOpen, onOpen, onClose} = useDisclosure()
+	const {data: users, fetchLoading} = useFetch(`http://localhost:4000/api/user`)
 
 	if (fetchLoading) return <>Loading...</>
 	if (!users) return <>No users</>

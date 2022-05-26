@@ -21,7 +21,7 @@ const PetsProvider = ({children}) => {
 	const fetchUserPets = async () => {
 		try {
 			const userPets = await axios.get(`http://localhost:4000/api/pet/userPets/${userInfo.uid}`)
-			setUserAdoptedPet(userPets.data.adoptedPet)
+			setUserAdoptedPet([...userPets.data.adoptedPet])
 			setUserFavorites([...userPets.data.favoritePet])
 		} catch (error) {
 			setError(error)
@@ -33,7 +33,6 @@ const PetsProvider = ({children}) => {
 	// Change Pets display according to query
 	const fetchQuery = async (qObject) => {
 		try {
-			console.log('enetered')
 			const qResponse = await axios.get(`http://localhost:4000/api/pet/test`, qObject)
 			console.log(qResponse.data)
 			setAllPets(qResponse.data)
@@ -43,7 +42,6 @@ const PetsProvider = ({children}) => {
 	}
 
 	useEffect(() => {
-		console.log(fetchLoading, 'prov')
 		if (!pets) return setLoadingUserPets(false)
 		setAllPets([...pets.data])
 		if (!isLoggedIn) return setLoadingUserPets(false)

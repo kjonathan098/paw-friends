@@ -7,7 +7,7 @@ function useForm() {
 		e.persist()
 		setState((state) => ({...state, [e.target.name]: e.target.value}))
 	}
-	return [state, handleChange]
+	return [state, handleChange, setState]
 }
 
 export default useForm

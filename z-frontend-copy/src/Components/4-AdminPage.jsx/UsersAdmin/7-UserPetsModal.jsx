@@ -1,10 +1,10 @@
 import React, {useContext, useState} from 'react'
-import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
+import petsContext from '../../../Context/AuthContext/PetsContext/PetsContex'
 import {Table, Thead, Tbody, Tr, Th, Td, TableContainer} from '@chakra-ui/react'
-import useFetch from '../../CustomHooks/apiCalls/useFetch'
+import useFetch from '../../../CustomHooks/apiCalls/useFetch'
 import {useEffect} from 'react'
-import usePetStatusTwo from '../../CustomHooks/PetManipulation/usePetStatusTwo.js'
-import usePetType from '../../CustomHooks/PetManipulation/usePetType'
+import usePetStatusTwo from '../../../CustomHooks/PetManipulation/usePetStatusTwo.js'
+import usePetType from '../../../CustomHooks/PetManipulation/usePetType'
 
 const UserPetsModal = ({user}) => {
 	const {data, fetchLoading, error, reFetch, setData} = useFetch(`http://localhost:4000/api/pet/userPets/${user._id}`)

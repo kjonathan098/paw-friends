@@ -9,7 +9,7 @@ const userConfig = {
 			//extract info and set them in local
 			const access_token = res.data.acces_token
 			const refresh_token = res.data.refresh_token
-			const userInfo = {name: res.data.name, surName: res.data.surName, uid: res.data.uid}
+			const userInfo = {name: res.data.name, surName: res.data.surName, uid: res.data.uid, permissions: res.data.permissions}
 
 			localStorage.setItem('access_token', access_token)
 			localStorage.setItem('refresh_token', refresh_token)

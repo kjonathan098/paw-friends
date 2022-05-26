@@ -1,29 +1,28 @@
-import {Button, HStack, Icon, IconButton, Td, Tr, useDisclosure} from '@chakra-ui/react'
 import React from 'react'
+import {Button, HStack, Icon, IconButton, Modal, ModalContent, ModalOverlay, Td, Tr, useDisclosure} from '@chakra-ui/react'
 import {BsBoxArrowUpRight, BsFillTrashFill} from 'react-icons/bs'
 import {AiFillEdit, AiTwotoneLock} from 'react-icons/ai'
-import UserModal from './5-UserModal'
-
-const UserTableBody = ({user}) => {
+import AddPetModal from './10-AddPetModal'
+import PetModalEdit from './12-PetModalEdit'
+const PetTableBody = ({pet}) => {
 	const {isOpen, onOpen, onClose} = useDisclosure()
 
 	return (
 		<>
 			<Tr>
-				<Td>{user.name}</Td>
-				<Td>{user.email}</Td>
+				<Td>{pet.name}</Td>
+				<Td>{pet._id}</Td>
 				<Td>
 					<HStack>
 						<Button size="xs" variant="solid" leftIcon={<Icon as={AiTwotoneLock} />} colorScheme="purple" onClick={onOpen}>
 							View Profile
 						</Button>
-						<IconButton size="xs" colorScheme="red" variant="solid" icon={<BsFillTrashFill />} />
 					</HStack>
 				</Td>
+				<PetModalEdit pet={pet} isOpen={isOpen} onClose={onClose} />
 			</Tr>
-			<UserModal user={user} isOpen={isOpen} onClose={onClose} />
 		</>
 	)
 }
 
-export default UserTableBody
+export default PetTableBody

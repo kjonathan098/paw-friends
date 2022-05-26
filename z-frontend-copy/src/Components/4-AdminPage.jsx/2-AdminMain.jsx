@@ -1,7 +1,7 @@
 import React from 'react'
 import {Tabs, TabList, TabPanels, Tab, TabPanel, Flex} from '@chakra-ui/react'
-import UserTableAdmin from './3-UsersTableAdmin'
-import PetTableMain from './8-PetTableMain'
+import UserTableAdmin from './UsersAdmin/3-UsersTableAdmin'
+import PetTableMain from './PetsAdmin/8-PetTableMain'
 
 const AdminMain = () => {
 	return (

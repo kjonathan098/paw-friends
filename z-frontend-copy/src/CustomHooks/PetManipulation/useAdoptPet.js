@@ -10,7 +10,11 @@ function useAdoptPet(pet) {
 		const res = await handlePetRequest.adoptPet(pet)
 		if (res.error) return res
 		pet.adoptionStatus = 2
+		console.log(userAdoptedPet)
+
 		setUserAdoptedPet([...userAdoptedPet, pet])
+		console.log('goood')
+
 		return res
 
 		// is adopted by user true

@@ -12,6 +12,7 @@ import PetsProvider from './Context/AuthContext/PetsContext/PetsProvider'
 import HomeRouter from './Components/1-Home/HomeRouter'
 import AdminRouter from './Components/4-AdminPage.jsx/1-AdminRouter'
 import MyProfileMain from './Components/UserProfile/MyProfileMain'
+import AdminMain from './Components/4-AdminPage.jsx/2-AdminMain'
 function App() {
 	return (
 		<AuthProvider>
@@ -36,7 +37,14 @@ function App() {
 							<Routes>
 								<Route path="/" element={<Home />} />
 								<Route path="/pets" element={<PetsMain />} />
-								<Route path="/admin" element={<AdminRouter />} />
+								<Route
+									path="/admin"
+									element={
+										<AuthRoute>
+											<AdminRouter />
+										</AuthRoute>
+									}
+								/>
 								<Route
 									path="/profile"
 									element={

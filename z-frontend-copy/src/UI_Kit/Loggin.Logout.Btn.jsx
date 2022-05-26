@@ -1,16 +1,26 @@
 import {Box, Avatar, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Center, useDisclosure, useToast} from '@chakra-ui/react'
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useContext} from 'react'
 import authContext from '../Context/AuthContext/AuthContext'
 import loginModalContext from '../Context/AuthContext/LoginModalContext/LoginModalContext'
 import userConfig from '../Config/User.Config'
 import {useNavigate} from 'react-router-dom'
 import AdminMain from '../Components/4-AdminPage.jsx/1-AdminRouter'
+import {useState} from 'react'
+
 const AuthButton = () => {
 	const navigate = useNavigate()
 	const {isLoggedIn, setLoading, setIsLoggedIn} = useContext(authContext)
 	const {isOpen, onOpen, onClose} = useContext(loginModalContext)
+	const [isAdmin, setIsAdmin] = useState(false)
 	const toast = useToast()
+
+	useEffect(() => {
+		let userPermission = localStorage.getItem('user_info')
+		userPermission = JSON.parse(userPermission)
+		if (!userPermission?.permissions?.admin) return
+		if (userPermission?.permissions?.admin) return setIsAdmin(true)
+	}, [isLoggedIn])
 
 	const handleLogout = () => {
 		setLoading(true)
@@ -51,13 +61,16 @@ const AuthButton = () => {
 					>
 						Profile
 					</MenuItem>
-					<MenuItem
-						onClick={() => {
-							navigate('/admin')
-						}}
-					>
-						Admin Page
-					</MenuItem>
+					{isAdmin && (
+						<MenuItem
+							onClick={() => {
+								navigate('/admin')
+							}}
+						>
+							Admin Page
+						</MenuItem>
+					)}
+
 					<MenuDivider />
 					<MenuItem>
 						<Center width={'100%'}>
