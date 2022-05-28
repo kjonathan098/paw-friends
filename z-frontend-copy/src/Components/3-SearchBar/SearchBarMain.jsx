@@ -33,7 +33,7 @@ const SearchBarMain = ({setDisplay}) => {
 					</Tooltip>
 				</Flex>
 			</PopoverTrigger>
-			<PopoverContent width={{md: '800px'}}>
+			<PopoverContent w={{md: `800px`, sm: '300px'}} padding={5}>
 				<AdvanceSearch setFlag={setFlag} />
 			</PopoverContent>
 		</Popover>

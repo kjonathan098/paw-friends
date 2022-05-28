@@ -29,12 +29,10 @@ const generateHash = async (password) => {
 	return hash
 }
 
-const comparePassword = async (userPass, reqPass) => {
-	const res = await bcryptLib.compare(userPass, reqPass)
+const comparePassword = async (plainPass, hashedPass) => {
+	const res = await bcryptLib.compare(plainPass, hashedPass)
 
 	return res
 }
-
-
 
 module.exports = {saveTokensDB, saveUserInReddis, generateHash, comparePassword}

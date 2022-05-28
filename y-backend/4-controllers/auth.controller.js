@@ -41,16 +41,14 @@ const login = async (req, res, next) => {
 	const user = await userServices.findByEmail(req.body.email)
 	if (!user) return next(errorHandler.userNotFound())
 
-	/*
+	// Check password with bcrypt
 
-    Check password with bcrypt
+	// NOT WORKING NEED TO FIX!!!!!!!!!!!!!!!!!!!!!
 
-	NOT WORKING NEED TO FIX!!!!!!!!!!!!!!!!!!!!!
-
-	const passwordValidation = await authServices.comparePassword(user.password, req.body.password)
+	const passwordValidation = await authServices.comparePassword(req.body.password, user.password)
+	console.log(passwordValidation)
 	if (!passwordValidation) return next(errorHandler.userNotFound())
 
-    */
 	// Save user permissions in "reddis"
 	await userServices.saveUserInReddis(user)
 

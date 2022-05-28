@@ -21,9 +21,9 @@ const validatePet = (object) => {
 
 const validateEditedPet = (object) => {
 	const schema = Joi.object({
-		type: Joi.string().min(1),
+		type: Joi.number().max(2).required(),
 		name: Joi.string().min(3),
-		adoptionStatus: Joi.string(),
+		adoptionStatus: Joi.number().max(2).required(),
 		picture: Joi.string().min(3),
 		height: Joi.number(),
 		weight: Joi.number(),

@@ -1,47 +1,142 @@
 import {SmallAddIcon} from '@chakra-ui/icons'
-import {Box, BreadcrumbLink, Button, Center, Input, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Portal, Radio, RadioGroup, Stack, useBoolean} from '@chakra-ui/react'
-import React, {useContext} from 'react'
+import {Box, BreadcrumbLink, Button, Center, HStack, Input, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Portal, Radio, RadioGroup, Stack, useBoolean, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Text} from '@chakra-ui/react'
+import React, {useContext, useEffect} from 'react'
 import {useState} from 'react'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
+import useForm from '../../CustomHooks/apiCalls/useForm'
+
+const createEvent = (name, value) => {
+	return {persist: () => {}, target: {name: name, value: value}}
+}
 
 const AdvanceSearch = ({setFlag}) => {
-	const [query, setQuery] = useState([])
-	const [petType, setPetType] = useState()
+	const initialState = {type: '-1', adoptionStatus: '-1', weight: [0, 100], height: [0, 110]}
 
-	const {fetchQuery} = useContext(petsContext)
+	const [values, handleChange, setForm] = useForm(initialState)
+	const {fetchQuery, fetchAllPets} = useContext(petsContext)
+	const [isFetching, setIsFetching] = useState(false)
 
-	const handleQuery = (e) => {
-		fetchQuery({params: petType})
+	// const onClear = async (e)=>{
+	// 	setForm(initialState)
+	// 	fetchAllPets()
+	// }
+
+	const handleQuery = async (e) => {
+		setIsFetching(true)
+
+		const params = {
+			name: values.name,
+			type: values.type,
+			adoption_status: values.adoptionStatus,
+			weight_start: values.weight[0],
+			weight_end: values.weight[1],
+			height_start: values.height[0],
+			height_end: values.height[1],
+		}
+
+		// if (values.name) params["name"] = values.name
+		// if (values.weight[0] !== initialState.weight[0]) {
+		// 	params["weight_start"] = values.weight[0]
+		// 	params["weight_end"] = values.weight[1]
+		// }
+
+		try {
+			const qResponse = await fetchQuery({params})
+			setFlag.off()
+			setIsFetching(false)
+		} catch (e) {
+			setIsFetching(false)
+		}
+
+		// console.log(qResponse)
 	}
+
 	return (
-		<Box p={3}>
+		<Box p={3} width={`100%`}>
 			<PopoverCloseButton onClick={setFlag.off} />
 			<Center>
 				<PopoverHeader mb={5} fontWeight={'400'}>
 					Advance Search
 				</PopoverHeader>
 			</Center>
-			<RadioGroup>
-				Search On
-				<Stack
-					direction="row"
-					onChange={(e) => {
-						setPetType({type: e.target.value})
+			<Input placeholder="Search Name" name="name" onChange={handleChange} value={values.name} disabled={isFetching} />
+			<HStack mt={5}>
+				<RadioGroup
+					name="type"
+					onChange={(newTypeValue) => {
+						const event = createEvent('type', newTypeValue)
+						handleChange(event)
 					}}
+					w={'50%'}
+					value={values.type}
 				>
-					<Radio value="">All</Radio>
-					<Radio value="1">Dogs</Radio>
-					<Radio value="2">Cats</Radio>
-				</Stack>
-			</RadioGroup>{' '}
-			{/* <Input placeholder="Search Name" />
-			<RadioGroup>
-				<Stack direction="row">
-					<Radio value="1">Available</Radio>
-					<Radio value="2">Fostered</Radio>
-					<Radio value="3">Adopted</Radio>
-				</Stack>
-			</RadioGroup>{' '} */}
+					Search On
+					<Stack direction="row" w={'50%'}>
+						<Radio value="-1">All</Radio>
+						<Radio value="1">Dogs</Radio>
+						<Radio value="2">Cats</Radio>
+					</Stack>
+				</RadioGroup>{' '}
+				<RadioGroup
+					mt={5}
+					w={'50%'}
+					name="adoptionStatus"
+					onChange={(newValue) => {
+						const event = createEvent('adoptionStatus', newValue)
+						handleChange(event)
+					}}
+					value={values.adoptionStatus}
+				>
+					Pet Adoption Status
+					<Stack direction="row">
+						<Radio value="-1">All</Radio>
+						<Radio value="0">Available</Radio>
+						<Radio value="1">Fostered</Radio>
+						<Radio value="2">Adopted</Radio>
+					</Stack>
+				</RadioGroup>{' '}
+			</HStack>
+			<Text mt={5}>
+				{' '}
+				Search Weight: {values.weight[0]}lbs - {values.weight[1]}lbs
+			</Text>
+			<RangeSlider
+				value={values.weight}
+				min={0}
+				max={100}
+				step={10}
+				name="weight"
+				onChange={(newValue) => {
+					const event = createEvent('weight', newValue)
+					handleChange(event)
+				}}
+			>
+				<RangeSliderTrack bg="green.900">
+					<RangeSliderFilledTrack bg="green.400" />
+				</RangeSliderTrack>
+				<RangeSliderThumb boxSize={6} index={0} shadow={'lg'} />
+				<RangeSliderThumb boxSize={6} index={1} shadow={'lg'} />
+			</RangeSlider>
+			<Text mt={5}>
+				Search Height: {values.height[0]}cm - {values.height[1]}cm
+			</Text>
+			<RangeSlider
+				value={values.height}
+				min={0}
+				max={110}
+				step={10}
+				name="height"
+				onChange={(newValue) => {
+					const event = createEvent('height', newValue)
+					handleChange(event)
+				}}
+			>
+				<RangeSliderTrack bg="green.900">
+					<RangeSliderFilledTrack bg="green.400" />
+				</RangeSliderTrack>
+				<RangeSliderThumb boxSize={6} index={0} shadow={'lg'} />
+				<RangeSliderThumb boxSize={6} index={1} shadow={'lg'} />
+			</RangeSlider>
 			<Button onClick={handleQuery}>Search</Button>
 		</Box>
 	)

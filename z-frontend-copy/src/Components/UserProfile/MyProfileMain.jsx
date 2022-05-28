@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Flex, FormControl, FormLabel, Heading, Input, Stack, useColorModeValue, HStack, Avatar, AvatarBadge, IconButton, Center} from '@chakra-ui/react'
+import {Button, Flex, FormControl, FormLabel, Heading, Input, Stack, useColorModeValue, HStack, Avatar, AvatarBadge, IconButton, Center, Text, Textarea} from '@chakra-ui/react'
 import {SmallCloseIcon} from '@chakra-ui/icons'
 import {useContext} from 'react'
 import authContext from '../../Context/AuthContext/AuthContext'
@@ -115,7 +115,7 @@ const MyProfileMain = () => {
 					</FormControl>
 					<FormControl id="Bio">
 						<FormLabel>Bio</FormLabel>
-						<Input
+						<Textarea
 							placeholder="Bio"
 							_placeholder={{color: 'gray.500'}}
 							type="text"

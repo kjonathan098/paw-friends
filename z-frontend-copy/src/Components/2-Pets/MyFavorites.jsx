@@ -2,6 +2,7 @@ import {Center, SimpleGrid} from '@chakra-ui/react'
 import React, {useContext, useEffect} from 'react'
 import authContext from '../../Context/AuthContext/AuthContext'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
+import LoginAlert from '../../UI_Kit/LoginAlert'
 import PetsCardsDisplay from './PetsCardsDisplay'
 
 const MyFavorites = () => {
@@ -10,7 +11,7 @@ const MyFavorites = () => {
 
 	if (loading || loadingUserPets) return <>Loading...</>
 
-	if (!isLoggedIn) return <Center h={'100vh'}>Please Login Bitch...</Center>
+	if (!isLoggedIn) return <LoginAlert />
 
 	if (!userFavorites || !userFavorites.length) return <Center h={'100vh'}>No Favorites Pets</Center>
 

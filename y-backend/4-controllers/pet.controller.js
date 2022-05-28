@@ -135,9 +135,35 @@ const handleQuery = async (req, res, next) => {
 		const pets = await petServices.getAll()
 		return res.send(pets)
 	}
-	const qResponse = await petServices.queryHandler(req.query)
 
+	let query = {}
+
+	const {name, weight_start, weight_end, height_start, height_end, type, adoption_status} = req.query
+
+	if (name) query.name = new RegExp(name, 'i') // /cuttie/i
+	if (weight_start && weight_end) query.weight = {$gte: weight_start, $lte: weight_end}
+
+	// if (weight_start) query.weigth = {$gte: weight_start}
+	// if (weight_end) {
+	// 	if (Object.keys(query.weigth).length) query.weigth['$lte'] = weight_end
+	// 	else query.weigth = {$lte: weight_end}
+	// }
+
+	// if (height_start && height_end) query.height = {$in: [height_start, height_end]}
+	// if (type !== '-1') query.type = type
+	// if (adoption_status !== '-1') query.adoptionStatus = adoption_status
+
+	console.log('query', query)
+
+	const qResponse = await petServices.queryHandler(query)
+	// console.log('response', qResponse)
 	return res.send(qResponse)
+	// try{
+	// 	const qResponse = await petServices.queryHandler(query)
+	// 	return res.send(qResponse)
+	// } catch(error) {
+	// 	return next(petErrorHandler())
+	// }
 }
 
 module.exports = {addPet, findAll, findOne, adoptFoster, editPet, returnPet, savePet, deletePet, findUserPets, handleQuery}

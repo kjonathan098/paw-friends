@@ -33,7 +33,7 @@ const PetsProvider = ({children}) => {
 	// Change Pets display according to query
 	const fetchQuery = async (qObject) => {
 		try {
-			const qResponse = await axios.get(`http://localhost:4000/api/pet/test`, qObject)
+			const qResponse = await axios.get(`http://localhost:4000/api/pet/query`, qObject)
 			console.log(qResponse.data)
 			setAllPets(qResponse.data)
 		} catch (error) {

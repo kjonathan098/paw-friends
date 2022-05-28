@@ -1,6 +1,6 @@
 import './App.css'
 import Home from './Components/1-Home/HomeRouter'
-import {NavLink, Route, Routes} from 'react-router-dom'
+import {NavLink, Route, Routes, useNavigate} from 'react-router-dom'
 import {Button, Flex} from '@chakra-ui/react'
 import AuthProvider from './Context/AuthContext/AuthProvider'
 import AuthButton from './UI_Kit/Loggin.Logout.Btn'
@@ -13,7 +13,9 @@ import HomeRouter from './Components/1-Home/HomeRouter'
 import AdminRouter from './Components/4-AdminPage.jsx/1-AdminRouter'
 import MyProfileMain from './Components/UserProfile/MyProfileMain'
 import AdminMain from './Components/4-AdminPage.jsx/2-AdminMain'
+import logo from './Media/logo2.png'
 function App() {
+	const nav = useNavigate()
 	return (
 		<AuthProvider>
 			<LoginModalProvider>
@@ -21,7 +23,17 @@ function App() {
 					<div className="App">
 						<Flex alignItems={'center'}>
 							<div className="menuMain">
-								<div>Logo</div>
+								<Flex
+									w={50}
+									h={50}
+									backgroundImage={logo}
+									backgroundSize={'cover'}
+									backgroundPosition={'center center'}
+									onClick={() => {
+										nav('/')
+									}}
+								/>
+
 								<Flex alignItems={'center'} spacing={10} w="500px">
 									<NavLink to="/" className="navLkink">
 										Home

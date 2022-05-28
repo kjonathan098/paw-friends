@@ -48,7 +48,7 @@ const editPet = async (body, petId) => {
 	const petObj = formPetObj(body)
 
 	// Find a pet and edit
-	const pet = await Pet.findByIdAndUpdate({_id: petId}, petObj)
+	const pet = await Pet.findByIdAndUpdate({_id: petId}, petObj, {new: true})
 	if (!pet) return false
 
 	return pet

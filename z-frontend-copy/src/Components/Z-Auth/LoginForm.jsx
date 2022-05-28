@@ -17,8 +17,15 @@ const LoginForm = ({setFormContent}) => {
 
 	const handleLogin = async () => {
 		setLoading(true)
+
+		// const isValid = validate(values)
+		// if (!isValid) return setLoading(false)
+
 		const userInfo = await userConfig.loginUser(values)
-		if (userInfo.error) return setError(userInfo.message)
+		if (userInfo.error) {
+			setError(userInfo.message)
+			return setLoading(false)
+		}
 		setUserInfo(userInfo)
 		setIsLoggedIn(true)
 		onClose()

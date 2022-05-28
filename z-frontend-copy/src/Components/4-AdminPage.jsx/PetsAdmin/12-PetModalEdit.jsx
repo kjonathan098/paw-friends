@@ -1,23 +1,40 @@
-import React, {useState} from 'react'
-import {Modal, ModalOverlay, ModalContent, useDisclosure, Select, Box} from '@chakra-ui/react'
+import React, {useContext, useState} from 'react'
+import {Modal, ModalOverlay, ModalContent, useDisclosure, Select, Box, Badge} from '@chakra-ui/react'
 import {Button, Flex, FormControl, FormLabel, Heading, Input, Stack, useColorModeValue, HStack, Avatar, AvatarBadge, IconButton, Center, Textarea} from '@chakra-ui/react'
 import useForm from '../../../CustomHooks/apiCalls/useForm'
 import useToastMessage from '../../../UI_Kit/ToastMessage'
 import {useEffect} from 'react'
+import axios from 'axios'
+import petsContext from '../../../Context/AuthContext/PetsContext/PetsContex'
 
-const PetModalEdit = ({isOpen, onClose, allPets, pet}) => {
-	const [values, handleChange, setState] = useForm()
+const PetModalEdit = ({isOpen, onClose, pet}) => {
+	const intitialState = {name: pet.name, type: pet.type, adoptionStatus: pet.adoptionStatus, bio: pet.bio, breed: pet.breed, color: pet.color, dietaryRestrictions: pet.dietaryRestrictions, height: pet.height, hypoallergenic: pet.hypoallergenic, weight: pet.weight}
+	const {allPets, setAllPets} = useContext(petsContext)
+
+	const [values, handleChange, setState] = useForm(intitialState)
 	const [loading, setLoading] = useState()
 	const {showToast, errorToast} = useToastMessage()
+	const [error, setError] = useState()
 
-	console.log(pet)
-
-	const intitialState = {name: pet.name, type: pet.type, adoptionStatus: pet.adoptionStatus, bio: pet.bio, breed: pet.breed, color: pet.color, dietaryRestrictions: pet.dietaryRestrictions, height: pet.height, hypoallergenic: pet.hypoallergenic, weight: pet.weight}
-
-	useEffect(() => {
-		setState(intitialState)
-		console.log(values)
-	}, [])
+	const updatePet = async () => {
+		setError(null)
+		setLoading(true)
+		try {
+			const res = await axios.put(`http://localhost:4000/api/pet/${pet._id}`, values, {headers: {Authorization: localStorage.getItem('access_token')}})
+			const petIndex = allPets.findIndex((obj) => obj._id === pet._id)
+			allPets[petIndex] = res.data
+			setAllPets(allPets)
+			console.log('updated index', petIndex)
+			console.log('All pets:', allPets)
+			console.log(res.data)
+			setError(null)
+			setLoading(false)
+		} catch (error) {
+			setError(error?.response?.data?.message || 'Error')
+		} finally {
+			setLoading(false)
+		}
+	}
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
@@ -97,7 +114,11 @@ const PetModalEdit = ({isOpen, onClose, allPets, pet}) => {
 							<FormLabel>Bio</FormLabel>
 							<Textarea placeholder="Bio" _placeholder={{color: 'gray.500'}} type="text" name="bio" onChange={handleChange} value={values.bio} />
 						</FormControl>
-
+						{error && (
+							<Badge colorScheme="red" align={'center'}>
+								{error}
+							</Badge>
+						)}
 						<Stack spacing={6} direction={['column', 'row']}>
 							<Button
 								bg={'red.400'}
@@ -107,9 +128,11 @@ const PetModalEdit = ({isOpen, onClose, allPets, pet}) => {
 									bg: 'red.500',
 								}}
 								disabled={loading}
+								onClick={onClose}
 							>
 								Cancel
 							</Button>
+
 							<Button
 								bg={'blue.400'}
 								color={'white'}
@@ -118,6 +141,7 @@ const PetModalEdit = ({isOpen, onClose, allPets, pet}) => {
 									bg: 'blue.500',
 								}}
 								isLoading={loading}
+								onClick={updatePet}
 							>
 								Submit
 							</Button>

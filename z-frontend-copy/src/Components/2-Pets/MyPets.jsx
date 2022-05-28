@@ -7,6 +7,7 @@ import {useContext} from 'react'
 import authContext from '../../Context/AuthContext/AuthContext'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
 import useFetch from '../../CustomHooks/apiCalls/useFetch'
+import LoginAlert from '../../UI_Kit/LoginAlert'
 import PetsCardsDisplay from './PetsCardsDisplay'
 
 const MyPets = () => {
@@ -41,7 +42,7 @@ const MyPets = () => {
 
 	if (loading || loadingUserPets) return <>Loading...</>
 
-	if (!isLoggedIn) return <Center h={'100vh'}>Please Login Bitch...</Center>
+	if (!isLoggedIn) return <LoginAlert />
 
 	if (!userAdoptedPet || !userAdoptedPet.length) return <Center h={'100vh'}>No Pets</Center>
 	return (

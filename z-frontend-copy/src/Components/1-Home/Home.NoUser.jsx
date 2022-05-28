@@ -1,12 +1,13 @@
 import {Stack, Flex, Button, Text, VStack, useBreakpointValue} from '@chakra-ui/react'
 import React from 'react'
 import {useContext} from 'react'
-import {NavLink} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 import authContext from '../../Context/AuthContext/AuthContext'
 import heroNoUser from '../../Media/HeroNoUser.jpeg'
 
 const HomeNoUser = () => {
 	const {isLoggedIn, loading} = useContext(authContext)
+	const navigate = useNavigate()
 
 	if (loading) return <>Loading...</>
 
@@ -18,7 +19,7 @@ const HomeNoUser = () => {
 						Find youre perfect paw-fwiend
 					</Text>
 					<Stack direction={'row'}>
-						<Button bg={'green.400'} rounded={'full'} color={'white'} _hover={{bg: 'green.500'}}>
+						<Button bg={'green.400'} rounded={'full'} color={'white'} _hover={{bg: 'green.500'}} onClick={() => navigate('/pets')}>
 							Search Pets
 						</Button>
 						<Button bg={'whiteAlpha.300'} rounded={'full'} color={'white'} _hover={{bg: 'whiteAlpha.500'}}>

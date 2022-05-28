@@ -8,6 +8,7 @@ import AddPetModal from './10-AddPetModal'
 const PetTableMain = () => {
 	const {allPets, fetchLoading} = useContext(petsContext)
 	const {isOpen, onOpen, onClose} = useDisclosure()
+	useEffect(() => {}, [allPets])
 
 	if (fetchLoading) return <>Loading....</>
 

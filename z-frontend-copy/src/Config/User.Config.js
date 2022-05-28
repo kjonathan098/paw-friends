@@ -23,6 +23,14 @@ const userConfig = {
 	logoutUser: () => {
 		localStorage.clear()
 	},
+	registerUser: async (values) => {
+		try {
+			const res = await axios.post('http://localhost:4000/api/auth/register', values)
+			return res.data
+		} catch (error) {
+			return error?.response?.data || {error: true, message: 'Error'}
+		}
+	},
 }
 
 export default userConfig

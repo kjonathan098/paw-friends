@@ -1,9 +1,33 @@
 import React, {useState} from 'react'
-import {Badge, Flex, Stack, useColorModeValue, Heading, Text, Box, HStack, FormControl, FormLabel, Input, InputGroup, InputRightElement, Button, Link} from '@chakra-ui/react'
+import {Badge, Flex, Stack, useColorModeValue, Heading, Text, Box, HStack, FormControl, FormLabel, Input, InputGroup, InputRightElement, Button, Link, useFormControl} from '@chakra-ui/react'
 import {ViewIcon, ViewOffIcon} from '@chakra-ui/icons'
+import useForm from '../../CustomHooks/apiCalls/useForm'
+import useToastMessage from '../../UI_Kit/ToastMessage'
+import userConfig from '../../Config/User.Config'
 
 const RegistrationForm = ({setFormContent}) => {
 	const [showPassword, setShowPassword] = useState(false)
+	const [values, handleChange] = useForm()
+	const [error, setError] = useState()
+	const [loading, setLoading] = useState()
+	const {showToast} = useToastMessage()
+
+	const handleRegister = async () => {
+		setError(null)
+		setLoading(true)
+		if (values.password !== values.rePassword) {
+			setError('passwords do not match ')
+			return setLoading(false)
+		}
+		const res = await userConfig.registerUser(values)
+		if (res.error) {
+			setError(res.message)
+			return setLoading(false)
+		}
+		setFormContent(true)
+		showToast('Success', 'Please login')
+		return setLoading(false)
+	}
 
 	return (
 		<Flex minH={'75vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -22,29 +46,29 @@ const RegistrationForm = ({setFormContent}) => {
 							<Box>
 								<FormControl id="firstName" isRequired>
 									<FormLabel>First Name</FormLabel>
-									<Input type="text" />
+									<Input type="text" name="name" onChange={handleChange} />
 								</FormControl>
 							</Box>
 							<Box>
 								<FormControl id="lastName" isRequired>
 									<FormLabel>Last Name</FormLabel>
-									<Input type="text" />
+									<Input type="text" name="surName" onChange={handleChange} />
 								</FormControl>
 							</Box>
 						</HStack>
 						<FormControl id="email" isRequired>
 							<FormLabel>Email address</FormLabel>
-							<Input type="email" />
+							<Input type="email" name="email" onChange={handleChange} />
 						</FormControl>
 						<FormControl id="email" isRequired>
 							<FormLabel>Phone Number</FormLabel>
-							<Input type="email" />
+							<Input type="email" name="phone" onChange={handleChange} />
 						</FormControl>
 
 						<FormControl id="password" isRequired>
 							<FormLabel>Password</FormLabel>
 							<InputGroup>
-								<Input type={showPassword ? 'text' : 'password'} />
+								<Input type={showPassword ? 'text' : 'password'} name="password" onChange={handleChange} />
 								<InputRightElement h={'full'}>
 									<Button variant={'ghost'} onClick={() => setShowPassword((showPassword) => !showPassword)}>
 										{showPassword ? <ViewIcon /> : <ViewOffIcon />}
@@ -55,7 +79,7 @@ const RegistrationForm = ({setFormContent}) => {
 						<FormControl id="rePassword" isRequired>
 							<FormLabel> Re-Password</FormLabel>
 							<InputGroup>
-								<Input type={showPassword ? 'text' : 'password'} />
+								<Input type={showPassword ? 'text' : 'password'} name="rePassword" onChange={handleChange} />
 								<InputRightElement h={'full'}>
 									<Button variant={'ghost'} onClick={() => setShowPassword((showPassword) => !showPassword)}>
 										{showPassword ? <ViewIcon /> : <ViewOffIcon />}
@@ -63,16 +87,11 @@ const RegistrationForm = ({setFormContent}) => {
 								</InputRightElement>
 							</InputGroup>
 						</FormControl>
-						{/* {error && (
+						{error && (
 							<Badge colorScheme="red" align={'center'}>
 								{error}
 							</Badge>
 						)}
-						{success && (
-							<Badge colorScheme="green" align={'center'}>
-								{success}
-							</Badge>
-						)} */}
 						<Stack spacing={10} pt={2}>
 							<Button
 								loadingText="Submitting"
@@ -83,6 +102,7 @@ const RegistrationForm = ({setFormContent}) => {
 									bg: 'green.500',
 								}}
 								// isLoading={loading}
+								onClick={handleRegister}
 							>
 								Sign up
 							</Button>

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
-const sceretJwt = 'Secret_key'
+const sceretJwt = process.env.JWT_SECRET
+
 const _ = require('lodash')
 
 const jwtLib = {
