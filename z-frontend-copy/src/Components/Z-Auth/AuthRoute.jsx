@@ -10,7 +10,6 @@ const AuthRoute = ({children}) => {
 
 	useEffect(() => {
 		if (loading) return
-		console.log(isLoggedIn)
 		if (!isLoggedIn) return navigate('/')
 	}, [isLoggedIn])
 

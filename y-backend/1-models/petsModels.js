@@ -19,8 +19,7 @@ const petSchema = mongoose.Schema({
 	},
 	picture: {
 		type: String,
-		required: true,
-		minlength: 1,
+		required: false,
 	},
 	height: {
 		type: Number,

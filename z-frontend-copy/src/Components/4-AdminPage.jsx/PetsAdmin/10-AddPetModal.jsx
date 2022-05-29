@@ -13,14 +13,33 @@ const AddPetModal = ({isOpen, onClose, allPets, pet}) => {
 	const [loading, setLoading] = useState()
 	const {showToast, errorToast} = useToastMessage()
 
+	const [petPicture, setPetPicture] = useState()
+
 	const addNewPet = async () => {
 		setLoading(true)
-		values.picture = 'asdaf'
 		try {
+			// ENV Var
+			const cloudName = 'dqfpsjdew'
+
+			// Create Form Data to attach image to request
+			const data = new FormData()
+			data.append('file', petPicture)
+			data.append('upload_preset', 'ml_default')
+			data.append('cloud_name', cloudName)
+
+			// Upload image to Cloudinary
+			const rawResponse = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {method: 'post', body: data})
+			const jsonResponse = await rawResponse.json()
+			// Get cloudinary image URL and add it to values.picture
+			values.picture = jsonResponse.url
+			// Request Save Pet to DB in backend
 			const res = await axios.post(`http://localhost:4000/api/pet/`, values, {headers: {Authorization: localStorage.getItem('access_token')}})
 			const newPet = res.data
 			setAllPets([...allPets, newPet])
 			showToast('Pet Added', `Pet Id : ${newPet._id}`)
+
+			// Clear Pet picture
+			setPetPicture(null)
 			onClose()
 		} catch (e) {
 			console.log(e.response.data)
@@ -41,10 +60,18 @@ const AddPetModal = ({isOpen, onClose, allPets, pet}) => {
 							<FormLabel>Add Pet Picture</FormLabel>
 							<Stack direction={['column', 'row']} spacing={6}>
 								<Center>
-									<Avatar size="xl" src="https://bit.ly/sage-adebayo"></Avatar>
+									<Avatar size="xl" src={petPicture ? URL.createObjectURL(petPicture) : 'https://bit.ly/sage-adebayo'}></Avatar>
 								</Center>
 								<Center w="full">
-									<Button w="full">Add Picture</Button>
+									<input
+										id="picture"
+										type="file"
+										name="picture"
+										onChange={(e) => {
+											setPetPicture(e.target.files[0])
+										}}
+									/>
+									{/* <Button w="full">Add Picture</Button> */}
 								</Center>
 							</Stack>
 						</FormControl>

@@ -6,15 +6,19 @@ import SearchBarMain from '../3-SearchBar/SearchBarMain'
 import PetsCardsDisplay from './PetsCardsDisplay'
 
 const SearchPets = () => {
-	const {allPets, loadingUserPets} = useContext(petsContext)
-	const [display, setDisplay] = useState()
+	const {allPets, loading, fetchAll, fetchUserPets} = useContext(petsContext)
 
-	if (loadingUserPets) return <>Loading...</>
+	console.log('rounds')
+
+	useEffect(() => {
+		fetchAll()
+	}, [])
+	if (loading) return <>Loading...</>
 
 	return (
 		<Box>
 			<Center mt={5}>
-				<SearchBarMain setDisplay={setDisplay} />
+				<SearchBarMain />
 			</Center>
 
 			<Center>

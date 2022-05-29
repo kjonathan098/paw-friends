@@ -4,6 +4,7 @@ import React, {useContext, useEffect} from 'react'
 import {useState} from 'react'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
 import useForm from '../../CustomHooks/apiCalls/useForm'
+import useToastMessage from '../../UI_Kit/ToastMessage'
 
 const createEvent = (name, value) => {
 	return {persist: () => {}, target: {name: name, value: value}}
@@ -15,6 +16,7 @@ const AdvanceSearch = ({setFlag}) => {
 	const [values, handleChange, setForm] = useForm(initialState)
 	const {fetchQuery, fetchAllPets} = useContext(petsContext)
 	const [isFetching, setIsFetching] = useState(false)
+	const {errorToast} = useToastMessage()
 
 	// const onClear = async (e)=>{
 	// 	setForm(initialState)
@@ -23,6 +25,8 @@ const AdvanceSearch = ({setFlag}) => {
 
 	const handleQuery = async (e) => {
 		setIsFetching(true)
+
+		console.log('hhey there')
 
 		const params = {
 			name: values.name,
@@ -34,6 +38,11 @@ const AdvanceSearch = ({setFlag}) => {
 			height_end: values.height[1],
 		}
 
+		console.log(params)
+
+		if (params.type === '-1') params.type = null
+		if (params.adoption_status === '-1') params.adoption_status = null
+
 		// if (values.name) params["name"] = values.name
 		// if (values.weight[0] !== initialState.weight[0]) {
 		// 	params["weight_start"] = values.weight[0]
@@ -42,6 +51,9 @@ const AdvanceSearch = ({setFlag}) => {
 
 		try {
 			const qResponse = await fetchQuery({params})
+			if (!qResponse) {
+				return errorToast('No Match Found')
+			}
 			setFlag.off()
 			setIsFetching(false)
 		} catch (e) {
@@ -59,7 +71,7 @@ const AdvanceSearch = ({setFlag}) => {
 					Advance Search
 				</PopoverHeader>
 			</Center>
-			<Input placeholder="Search Name" name="name" onChange={handleChange} value={values.name} disabled={isFetching} />
+			<Input placeholder="Search Name" name="name" onChange={handleChange} value={values.name} />
 			<HStack mt={5}>
 				<RadioGroup
 					name="type"

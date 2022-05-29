@@ -11,9 +11,9 @@ import LoginModalProvider from './Context/AuthContext/LoginModalContext/LoginMod
 import PetsProvider from './Context/AuthContext/PetsContext/PetsProvider'
 import HomeRouter from './Components/1-Home/HomeRouter'
 import AdminRouter from './Components/4-AdminPage.jsx/1-AdminRouter'
-import MyProfileMain from './Components/UserProfile/MyProfileMain'
 import AdminMain from './Components/4-AdminPage.jsx/2-AdminMain'
 import logo from './Media/logo2.png'
+import MyProfileMainCopy from './Components/UserProfile/MyProfileMain'
 function App() {
 	const nav = useNavigate()
 	return (
@@ -61,7 +61,7 @@ function App() {
 									path="/profile"
 									element={
 										<AuthRoute>
-											<MyProfileMain />
+											<MyProfileMainCopy />
 										</AuthRoute>
 									}
 								/>

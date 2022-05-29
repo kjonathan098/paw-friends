@@ -4,7 +4,6 @@ const _ = require('lodash')
 
 const findUserById = async (uid) => {
 	const user = await User.findById({_id: uid})
-	console.log(user)
 	return user
 }
 

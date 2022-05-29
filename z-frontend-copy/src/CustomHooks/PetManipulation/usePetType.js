@@ -5,20 +5,29 @@ function usePetType() {
 	const [petTypeStringArray, setPetTypeStringArray] = useState([])
 
 	const handleType = (pets) => {
+		console.warn('pets', pets)
 		let petType = []
 
 		for (const pet of pets) {
+			console.log('checking pet type', pet)
 			switch (pet.type) {
 				case 1:
-					pet.type = 'Dog'
+					console.log('Im a dog')
+					pet.typeDisplay = 'Dog'
 					petType = [...petType, pet]
 					setPetTypeStringArray(petType)
 					break
 				case 2:
-					pet.type = 'Cat'
+					console.log('Im a cat')
+					pet.typeDisplay = 'Cat'
 					petType = [...petType, pet]
 					setPetTypeStringArray(petType)
 					break
+				default:
+					console.log('Im a dragon')
+					pet.typeDisplay = 'Dragon'
+					petType = [...petType, pet]
+					setPetTypeStringArray(petType)
 			}
 		}
 		setPetTypeLoading(false)

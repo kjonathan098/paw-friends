@@ -6,11 +6,14 @@ import {PlusIcon, AddIcon, WarningIcon} from '@chakra-ui/icons'
 import AddPetModal from './10-AddPetModal'
 
 const PetTableMain = () => {
-	const {allPets, fetchLoading} = useContext(petsContext)
+	const {allPets, fetchAll, loading} = useContext(petsContext)
 	const {isOpen, onOpen, onClose} = useDisclosure()
-	useEffect(() => {}, [allPets])
 
-	if (fetchLoading) return <>Loading....</>
+	useEffect(() => {
+		fetchAll()
+	}, [])
+
+	if (loading) return <>Loading....</>
 
 	return (
 		<Box mt={10}>

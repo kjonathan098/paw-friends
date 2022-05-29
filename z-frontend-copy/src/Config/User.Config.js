@@ -31,6 +31,15 @@ const userConfig = {
 			return error?.response?.data || {error: true, message: 'Error'}
 		}
 	},
+	updUserProfile: async (uid, query) => {
+		// console.log(uid, query)
+		try {
+			const res = await axios.put(`http://localhost:4000/api/user/${uid}`, query, {headers: {Authorization: localStorage.getItem('access_token')}})
+			return true
+		} catch (error) {
+			return error?.response?.data || {error: true, message: 'Error'}
+		}
+	},
 }
 
 export default userConfig

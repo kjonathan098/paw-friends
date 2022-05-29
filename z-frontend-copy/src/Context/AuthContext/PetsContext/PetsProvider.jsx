@@ -7,23 +7,36 @@ import authContext from '../AuthContext'
 import petsContext from './PetsContex'
 
 const PetsProvider = ({children}) => {
-	const {isLoggedIn, userInfo} = useContext(authContext)
+	const {userInfo} = useContext(authContext)
 	const [userAdoptedPet, setUserAdoptedPet] = useState([])
 	const [userFavorites, setUserFavorites] = useState([])
 	const [loadingUserPets, setLoadingUserPets] = useState(true)
 	const [allPets, setAllPets] = useState([])
-	const [e, setError] = useState()
+	const [error, setError] = useState()
+	const [loading, setLoading] = useState(true)
+	console.log(userInfo)
 
-	// fetch all pets
-	const {data: pets, fetchLoading, error, reFetch, setData} = useFetch('http://localhost:4000/api/pet/')
+	const fetchAll = async () => {
+		try {
+			const data = await axios.get('http://localhost:4000/api/pet/', {headers: {Authorization: localStorage.getItem('access_token')}})
+			setAllPets(data.data)
+		} catch (error) {
+			setError(error.message)
+		} finally {
+			setLoading(false)
+		}
+	}
 
 	// Fetch users Pets
 	const fetchUserPets = async () => {
+		const userInfo = JSON.parse(localStorage.getItem('user_info'))
 		try {
 			const userPets = await axios.get(`http://localhost:4000/api/pet/userPets/${userInfo.uid}`)
+			console.log(userPets.data.adoptedPet)
 			setUserAdoptedPet([...userPets.data.adoptedPet])
 			setUserFavorites([...userPets.data.favoritePet])
 		} catch (error) {
+			console.log(error)
 			setError(error)
 		} finally {
 			setLoadingUserPets(false)
@@ -34,21 +47,21 @@ const PetsProvider = ({children}) => {
 	const fetchQuery = async (qObject) => {
 		try {
 			const qResponse = await axios.get(`http://localhost:4000/api/pet/query`, qObject)
-			console.log(qResponse.data)
+			if (!qResponse.data.length) return false
 			setAllPets(qResponse.data)
+			return true
 		} catch (error) {
+			console.log(error)
 		} finally {
 		}
 	}
 
-	useEffect(() => {
-		if (!pets) return setLoadingUserPets(false)
-		setAllPets([...pets.data])
-		if (!isLoggedIn) return setLoadingUserPets(false)
-		fetchUserPets()
-	}, [isLoggedIn, pets])
+	// useEffect(() => {
+	// 	// if (!isLoggedIn) return setLoadingUserPets(false)
+	// 	fetchUserPets()
+	// }, [isLoggedIn, pets])
 
-	return <petsContext.Provider value={{fetchLoading, userAdoptedPet, setUserAdoptedPet, userFavorites, setUserFavorites, loadingUserPets, allPets, setAllPets, fetchQuery}}>{children}</petsContext.Provider>
+	return <petsContext.Provider value={{userAdoptedPet, setUserAdoptedPet, userFavorites, setUserFavorites, loadingUserPets, allPets, setAllPets, fetchQuery, fetchAll, loading, fetchUserPets}}>{children}</petsContext.Provider>
 }
 
 export default PetsProvider

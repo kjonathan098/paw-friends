@@ -60,7 +60,7 @@ const UserPetsModal = ({user}) => {
 							<Tbody>
 								<Tr>
 									<Td>{pet.name}</Td>
-									<Td>{pet.type}</Td>
+									<Td>{pet.typeDisplay}</Td>
 									<Td>{pet.adoptionStatus}</Td>
 									<Td>{pet._id}</Td>
 								</Tr>

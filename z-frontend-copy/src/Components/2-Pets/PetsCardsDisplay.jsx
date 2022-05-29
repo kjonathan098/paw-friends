@@ -9,7 +9,6 @@ const IMAGE = 'https://source.unsplash.com/yihlaRCCvd4'
 const PetsCardsDisplay = ({pet}) => {
 	const {isOpen, onOpen, onClose} = useDisclosure()
 
-
 	usePetStatus(pet)
 
 	// console.log(petStatus)
@@ -19,7 +18,7 @@ const PetsCardsDisplay = ({pet}) => {
 	return (
 		<Box role={'group'} p={6} maxW={'330px'} w={'full'} bg={'white'} boxShadow={'2xl'} rounded={'lg'} pos={'relative'}>
 			<Box boxShadow="md">
-				<Image rounded={'lg'} height={230} width={282} objectFit={'cover'} src={IMAGE} />
+				<Image rounded={'lg'} height={230} width={282} objectFit={'cover'} src={pet.picture ? pet.picture : IMAGE} />
 			</Box>
 			<Stack pt={10} align={'center'}>
 				<Text color={'green.500'} fontSize={'sm'} textTransform={'uppercase'}>
