@@ -7,9 +7,11 @@ import PetsCardsDisplay from './PetsCardsDisplay'
 
 const MyFavorites = () => {
 	const {isLoggedIn, loading} = useContext(authContext)
-	const {loadingUserPets, userFavorites} = useContext(petsContext)
+	const {loadingUserPets, userFavorites, fetchUserPets} = useContext(petsContext)
 
-	if (loading || loadingUserPets) return <>Loading...</>
+	useEffect(() => {}, [loadingUserPets])
+
+	if (loadingUserPets) return <>Loading...</>
 
 	if (!isLoggedIn) return <LoginAlert />
 

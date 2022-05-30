@@ -5,7 +5,7 @@ function usePetType() {
 	const [petTypeStringArray, setPetTypeStringArray] = useState([])
 
 	const handleType = (pets) => {
-		console.warn('pets', pets)
+		console.log('afafafa')
 		let petType = []
 
 		for (const pet of pets) {

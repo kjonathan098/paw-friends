@@ -13,10 +13,8 @@ import PetsCardsDisplay from './PetsCardsDisplay'
 const MyPets = () => {
 	const {isLoggedIn} = useContext(authContext)
 	const {loadingUserPets, userAdoptedPet, fetchUserPets} = useContext(petsContext)
-	console.log(loadingUserPets)
 
 	useEffect(() => {
-		console.log('fetching my pets')
 		fetchUserPets()
 	}, [])
 

@@ -14,7 +14,6 @@ const PetsProvider = ({children}) => {
 	const [allPets, setAllPets] = useState([])
 	const [error, setError] = useState()
 	const [loading, setLoading] = useState(true)
-	console.log(userInfo)
 
 	const fetchAll = async () => {
 		try {
@@ -30,9 +29,11 @@ const PetsProvider = ({children}) => {
 	// Fetch users Pets
 	const fetchUserPets = async () => {
 		const userInfo = JSON.parse(localStorage.getItem('user_info'))
+		if (!userInfo) {
+			return setLoading(false)
+		}
 		try {
 			const userPets = await axios.get(`http://localhost:4000/api/pet/userPets/${userInfo.uid}`)
-			console.log(userPets.data.adoptedPet)
 			setUserAdoptedPet([...userPets.data.adoptedPet])
 			setUserFavorites([...userPets.data.favoritePet])
 		} catch (error) {

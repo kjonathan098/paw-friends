@@ -19,7 +19,6 @@ const UserTableBody = ({user}) => {
 						<Button size="xs" variant="solid" leftIcon={<Icon as={AiTwotoneLock} />} colorScheme="purple" onClick={onOpen}>
 							View Profile
 						</Button>
-						<IconButton size="xs" colorScheme="red" variant="solid" icon={<BsFillTrashFill />} />
 					</HStack>
 				</Td>
 			</Tr>

@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import {useEffect} from 'react'
 import usePetStatus from '../../CustomHooks/PetManipulation/usePetStatus'
 import usePetStatusTwo from '../../CustomHooks/PetManipulation/usePetStatusTwo'
+import usePetType from '../../CustomHooks/PetManipulation/usePetType'
 import PetModal from './PetModal'
 const IMAGE = 'https://source.unsplash.com/yihlaRCCvd4'
 
@@ -18,7 +19,7 @@ const PetsCardsDisplay = ({pet}) => {
 	return (
 		<Box role={'group'} p={6} maxW={'330px'} w={'full'} bg={'white'} boxShadow={'2xl'} rounded={'lg'} pos={'relative'}>
 			<Box boxShadow="md">
-				<Image rounded={'lg'} height={230} width={282} objectFit={'cover'} src={pet.picture ? pet.picture : IMAGE} />
+				<Image rounded={'lg'} height={230} width={282} objectFit={'cover'} src={pet.picture} />
 			</Box>
 			<Stack pt={10} align={'center'}>
 				<Text color={'green.500'} fontSize={'sm'} textTransform={'uppercase'}>

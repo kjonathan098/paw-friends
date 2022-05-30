@@ -6,6 +6,8 @@ import useForm from '../../../CustomHooks/apiCalls/useForm'
 import axios from 'axios'
 import petsContext from '../../../Context/AuthContext/PetsContext/PetsContex'
 import useToastMessage from '../../../UI_Kit/ToastMessage'
+import cloudlyRequest from '../../../Config/Cloudly.Config'
+import handlePetRequest from '../../../Config/Pet.Config'
 
 const AddPetModal = ({isOpen, onClose, allPets, pet}) => {
 	const [values, handleChange] = useForm()
@@ -17,35 +19,29 @@ const AddPetModal = ({isOpen, onClose, allPets, pet}) => {
 
 	const addNewPet = async () => {
 		setLoading(true)
-		try {
-			// ENV Var
-			const cloudName = 'dqfpsjdew'
 
-			// Create Form Data to attach image to request
-			const data = new FormData()
-			data.append('file', petPicture)
-			data.append('upload_preset', 'ml_default')
-			data.append('cloud_name', cloudName)
+		const couldlyUrl = await cloudlyRequest.uploadPic(petPicture)
 
-			// Upload image to Cloudinary
-			const rawResponse = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {method: 'post', body: data})
-			const jsonResponse = await rawResponse.json()
-			// Get cloudinary image URL and add it to values.picture
-			values.picture = jsonResponse.url
-			// Request Save Pet to DB in backend
-			const res = await axios.post(`http://localhost:4000/api/pet/`, values, {headers: {Authorization: localStorage.getItem('access_token')}})
-			const newPet = res.data
-			setAllPets([...allPets, newPet])
-			showToast('Pet Added', `Pet Id : ${newPet._id}`)
-
-			// Clear Pet picture
-			setPetPicture(null)
-			onClose()
-		} catch (e) {
-			console.log(e.response.data)
-		} finally {
-			setLoading(false)
+		if (couldlyUrl.error) {
+			errorToast(couldlyUrl.message)
+			return setLoading(false)
 		}
+		values.picture = couldlyUrl
+
+		const newPet = await handlePetRequest.addNewPet(values)
+
+		if (newPet.error) {
+			errorToast(newPet?.message || 'Error Please try again')
+			return setLoading(false)
+		}
+
+		setAllPets([...allPets, newPet])
+		showToast('Pet Added', `Pet Id : ${newPet._id}`)
+
+		// Clear Pet picture
+		setPetPicture(null)
+		onClose()
+		return setLoading(false)
 	}
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>

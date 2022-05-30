@@ -11,20 +11,24 @@ import showToast from '../../UI_Kit/ToastMessage'
 import useToastMessage from '../../UI_Kit/ToastMessage'
 import useModalButtons from '../../CustomHooks/PetManipulation/useModalButtons'
 import usePetStatusTwo from '../../CustomHooks/PetManipulation/usePetStatusTwo'
+import usePetType from '../../CustomHooks/PetManipulation/usePetType'
 
 const PetModal = ({pet, onClose}) => {
 	const {isLoggedIn, loading, userInfo} = useContext(authContext)
-
 	const [success, setSuccess] = useState()
 	const [error, setError] = useState()
 
 	const {onOpen} = useContext(loginModalContext)
 
-
 	const {isFavorite, addToFavorites, removeFavorite} = useFavoritePets(pet)
 	const {fosterBtnDis, adoptBtnDis, returnBtnDis, btnHandler} = useModalButtons(pet)
 	const {adoptPet, returnPet, fosterPet, createToast} = useAdoptPet(pet)
 	const {showToast, errorToast} = useToastMessage()
+
+	const {handleType, petTypeLoading} = usePetType()
+	useEffect(() => {
+		handleType([pet])
+	}, [])
 
 	// console.log(fosterBtnDis)
 
@@ -62,12 +66,12 @@ const PetModal = ({pet, onClose}) => {
 		return showToast('Success', 'Pet removed from favorites', 'warning')
 	}
 
-	if (loading) return <div>Loading...</div>
+	if (loading || petTypeLoading) return <div>Loading...</div>
 	return (
 		<Center py={6}>
 			<Stack borderWidth="1px" borderRadius="lg" w={{sm: '100%', md: '540px'}} height={{sm: '476px', md: '20rem'}} direction={{base: 'column', md: 'row'}} bg={'white'} boxShadow={'2xl'} padding={4}>
 				<Flex flex={1} bg="blue.200">
-					<Image objectFit="cover" boxSize="100%" src={'https://source.unsplash.com/yihlaRCCvd4'} />
+					<Image objectFit="cover" boxSize="100%" src={pet.picture} />
 				</Flex>
 				<Stack flex={1} flexDirection="column" justifyContent="center" alignItems="center" p={1} pt={2}>
 					<Heading fontSize={'2xl'} fontFamily={'body'}>
@@ -79,7 +83,10 @@ const PetModal = ({pet, onClose}) => {
 					<Text textAlign={'center'} color={'gray.900'} px={3}>
 						{pet.bio}
 					</Text>
-					<Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
+					<Stack align={'center'} justify={'center'} direction={'row'}>
+						<Badge px={2} py={1} bg={'gray.100'} fontWeight={'400'}>
+							{pet.typeDisplay}
+						</Badge>
 						<Badge px={2} py={1} bg={'gray.100'} fontWeight={'400'}>
 							{pet.color}
 						</Badge>

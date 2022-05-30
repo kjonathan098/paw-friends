@@ -8,8 +8,6 @@ import PetsCardsDisplay from './PetsCardsDisplay'
 const SearchPets = () => {
 	const {allPets, loading, fetchAll, fetchUserPets} = useContext(petsContext)
 
-	console.log('rounds')
-
 	useEffect(() => {
 		fetchAll()
 	}, [])

@@ -11,6 +11,7 @@ import useForm from '../../CustomHooks/apiCalls/useForm'
 import ErrorAlert from '../../UI_Kit/ErrorAlert'
 import userConfig from '../../Config/User.Config'
 import useToastMessage from '../../UI_Kit/ToastMessage'
+import avatarProfile from '../../Media/avatarProfile.jpeg'
 
 const MyProfileMainCopy = () => {
 	const {userInfo, loading} = useContext(authContext)
@@ -64,20 +65,15 @@ const MyProfileMainCopy = () => {
 		<Flex minH={'100vh'} align={'center'} justify={'center'} bg={'gray.50'}>
 			{values && (
 				<Stack spacing={4} w={'full'} maxW={'md'} bg={'white'} rounded={'xl'} boxShadow={'lg'} p={6} my={12}>
-					<Heading lineHeight={1.1} fontSize={{base: '2xl', sm: '3xl'}}>
-						User Profile Edit
-					</Heading>
+					<Center>
+						<Heading lineHeight={1.1} fontSize={{base: '2xl', sm: '3xl'}}>
+							User Profile Edit
+						</Heading>
+					</Center>
 					<FormControl id="userName">
-						<Stack direction={['column', 'row']} spacing={6}>
-							<Center>
-								<Avatar size="xl" src="https://bit.ly/sage-adebayo">
-									<AvatarBadge as={IconButton} size="sm" rounded="full" top="-10px" colorScheme="red" aria-label="remove Image" icon={<SmallCloseIcon />} />
-								</Avatar>
-							</Center>
-							<Center w="full">
-								<Button w="full">Change Icon</Button>
-							</Center>
-						</Stack>
+						<Center>
+							<Avatar size="xl" src={avatarProfile} />
+						</Center>
 					</FormControl>
 					<HStack>
 						<FormControl id="userName" isRequired>

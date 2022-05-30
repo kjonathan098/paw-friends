@@ -6,35 +6,48 @@ import useToastMessage from '../../../UI_Kit/ToastMessage'
 import {useEffect} from 'react'
 import axios from 'axios'
 import petsContext from '../../../Context/AuthContext/PetsContext/PetsContex'
+import handlePetRequest from '../../../Config/Pet.Config'
+import cloudlyRequest from '../../../Config/Cloudly.Config'
 
 const PetModalEdit = ({isOpen, onClose, pet}) => {
-	const intitialState = {name: pet.name, type: pet.type, adoptionStatus: pet.adoptionStatus, bio: pet.bio, breed: pet.breed, color: pet.color, dietaryRestrictions: pet.dietaryRestrictions, height: pet.height, hypoallergenic: pet.hypoallergenic, weight: pet.weight}
+	const intitialState = {picture: pet.picture, name: pet.name, type: pet.type, adoptionStatus: pet.adoptionStatus, bio: pet.bio, breed: pet.breed, color: pet.color, dietaryRestrictions: pet.dietaryRestrictions, height: pet.height, hypoallergenic: pet.hypoallergenic, weight: pet.weight}
 	const {allPets, setAllPets} = useContext(petsContext)
 
 	const [values, handleChange, setState] = useForm(intitialState)
 	const [loading, setLoading] = useState()
 	const {showToast, errorToast} = useToastMessage()
 	const [error, setError] = useState()
+	const [picPreview, setPicPreview] = useState()
 
 	const updatePet = async () => {
 		setError(null)
 		setLoading(true)
-		try {
-			const res = await axios.put(`http://localhost:4000/api/pet/${pet._id}`, values, {headers: {Authorization: localStorage.getItem('access_token')}})
-			const petIndex = allPets.findIndex((obj) => obj._id === pet._id)
-			allPets[petIndex] = res.data
-			setAllPets(allPets)
-			console.log('updated index', petIndex)
-			console.log('All pets:', allPets)
-			console.log(res.data)
-			setError(null)
-			setLoading(false)
-		} catch (error) {
-			setError(error?.response?.data?.message || 'Error')
-		} finally {
-			setLoading(false)
+
+		if (picPreview) {
+			const url = await cloudlyRequest.uploadPic(picPreview)
+			if (url.error) return errorToast('Pic upload error.. Please try again')
+			values.picture = url
 		}
+
+		const res = await handlePetRequest.updPet(pet, values)
+
+		if (res.error) {
+			errorToast(error?.response?.data?.message || 'Error')
+			return setLoading(false)
+		}
+
+		const petIndex = allPets.findIndex((obj) => obj._id === pet._id)
+		allPets[petIndex] = res
+		setAllPets(allPets)
+		showToast('', 'Pet Updated')
+
+		setError(null)
+		return setLoading(false)
 	}
+
+	useEffect(() => {
+		setPicPreview(null)
+	}, [isOpen])
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
@@ -43,16 +56,24 @@ const PetModalEdit = ({isOpen, onClose, pet}) => {
 				<Flex align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
 					<Stack spacing={4} w={'full'} maxW={'md'} bg={useColorModeValue('white', 'gray.700')} rounded={'xl'} boxShadow={'lg'} p={6} my={4}>
 						<Heading lineHeight={1.1} fontSize={{base: '2xl', sm: '3xl'}}>
-							Add New Pet
+							Edit Pet
 						</Heading>
 						<FormControl id="picture">
-							<FormLabel>Add Pet Picture</FormLabel>
+							<FormLabel>Change Pet Picture</FormLabel>
 							<Stack direction={['column', 'row']} spacing={6}>
 								<Center>
-									<Avatar size="xl" src="https://bit.ly/sage-adebayo"></Avatar>
+									<Avatar size="xl" src={picPreview ? URL.createObjectURL(picPreview) : values.picture}></Avatar>
 								</Center>
 								<Center w="full">
-									<Button w="full">Add Picture</Button>
+									<Input
+										type={'file'}
+										w="full"
+										name="picture"
+										onChange={(e) => {
+											setPicPreview(e.target.files[0])
+										}}
+									/>
+									{/* <Button w="full">Add Picture</Button> */}
 								</Center>
 							</Stack>
 						</FormControl>
