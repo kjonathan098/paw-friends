@@ -9,8 +9,6 @@ const MyFavorites = () => {
 	const {isLoggedIn, loading} = useContext(authContext)
 	const {loadingUserPets, userFavorites, fetchUserPets} = useContext(petsContext)
 
-	useEffect(() => {}, [loadingUserPets])
-
 	if (loadingUserPets) return <>Loading...</>
 
 	if (!isLoggedIn) return <LoginAlert />

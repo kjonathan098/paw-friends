@@ -30,7 +30,7 @@ const PetsProvider = ({children}) => {
 	const fetchUserPets = async () => {
 		const userInfo = JSON.parse(localStorage.getItem('user_info'))
 		if (!userInfo) {
-			return setLoading(false)
+			return setLoadingUserPets(false)
 		}
 		try {
 			const userPets = await axios.get(`http://localhost:4000/api/pet/userPets/${userInfo.uid}`)

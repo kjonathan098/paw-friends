@@ -17,4 +17,7 @@ router.get('/:id/full', userController.getFullUser)
 // UPDATE USER
 router.put('/:id', validateToken, userController.editProfile)
 
+// UPDATE USER PASSWORD
+router.put('/password/:id', validateToken, userController.editPassword)
+
 module.exports = router

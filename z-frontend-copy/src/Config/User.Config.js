@@ -1,4 +1,6 @@
 import axios from 'axios'
+const userInfo = JSON.parse(localStorage.getItem('user_info'))
+
 const userConfig = {
 	loginUser: async (values) => {
 		try {
@@ -31,13 +33,22 @@ const userConfig = {
 			return error?.response?.data || {error: true, message: 'Error'}
 		}
 	},
-	updUserProfile: async (uid, query) => {
+	updUserProfile: async (query) => {
 		// console.log(uid, query)
 		try {
-			const res = await axios.put(`http://localhost:4000/api/user/${uid}`, query, {headers: {Authorization: localStorage.getItem('access_token')}})
+			const res = await axios.put(`http://localhost:4000/api/user/${userInfo.uid}`, query, {headers: {Authorization: localStorage.getItem('access_token')}})
 			return true
 		} catch (error) {
 			return error?.response?.data || {error: true, message: 'Error'}
+		}
+	},
+	updUserPassword: async (query) => {
+		try {
+			const res = await axios.put(`http://localhost:4000/api/user/password/626663f091235bcf5b0f66f0`, query, {headers: {Authorization: localStorage.getItem('access_token')}})
+			return true
+		} catch (error) {
+			console.log(error?.response?.data)
+			return {error: true, message: 'Error'}
 		}
 	},
 }

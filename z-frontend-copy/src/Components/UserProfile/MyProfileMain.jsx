@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Flex, FormControl, FormLabel, Heading, Input, Stack, useColorModeValue, HStack, Avatar, AvatarBadge, IconButton, Center, Text, Textarea, Badge} from '@chakra-ui/react'
+import {Button, Flex, FormControl, FormLabel, Heading, Input, Stack, useColorModeValue, HStack, Avatar, AvatarBadge, IconButton, Center, Text, Textarea, Badge, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box} from '@chakra-ui/react'
 import {SmallCloseIcon} from '@chakra-ui/icons'
 import {useContext} from 'react'
 import authContext from '../../Context/AuthContext/AuthContext'
@@ -12,6 +12,7 @@ import ErrorAlert from '../../UI_Kit/ErrorAlert'
 import userConfig from '../../Config/User.Config'
 import useToastMessage from '../../UI_Kit/ToastMessage'
 import avatarProfile from '../../Media/avatarProfile.jpeg'
+import PasswordUpd from './PasswordUpd'
 
 const MyProfileMainCopy = () => {
 	const {userInfo, loading} = useContext(authContext)
@@ -47,7 +48,7 @@ const MyProfileMainCopy = () => {
 
 		if (Object.keys(finalUpdObj).length === 0) return setUpdError('No changes were detected')
 
-		const res = await userConfig.updUserProfile(userInfo.uid, finalUpdObj)
+		const res = await userConfig.updUserProfile(finalUpdObj)
 		if (res.error) return setUpdError(res.message)
 
 		showToast('Success', 'Profile Updated ')
@@ -89,9 +90,9 @@ const MyProfileMainCopy = () => {
 						<FormLabel>Email address</FormLabel>
 						<Input placeholder="your-email@example.com" _placeholder={{color: 'gray.500'}} type="email" name="email" value={values.email} onChange={handleChange} />
 					</FormControl>
+
 					<FormControl id="password" isRequired>
-						<FormLabel>Password</FormLabel>
-						<Input placeholder="password" _placeholder={{color: 'gray.500'}} type="password" name="password" onChange={handleChange} />
+						<PasswordUpd />
 					</FormControl>
 					<FormControl id="phone" isRequired>
 						<FormLabel>Phone</FormLabel>

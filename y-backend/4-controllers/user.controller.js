@@ -43,15 +43,17 @@ const getFullUser = async (req, res, next) => {
 }
 
 const editProfile = async (req, res, next) => {
-	console.log('hi')
 	const editedRequest = req.body
 
-	//check that req id === token uid
+	// //check that req id === token uid
 	if (req.params.id !== req.user.uid) return next(userErrorHandler.idMismatch())
 
-	// validate that fields sent have values
+	// // validate that fields sent have values
 	const error = joiValidateService(editProfileValidation, editedRequest)
-	if (error) return next(errorHandler.joiValidationFailed(error))
+	if (error) {
+		console.log(error)
+		return next(errorHandler.joiValidationFailed(error))
+	}
 
 	// create obj with any fields filled
 	const editUser = formUserObj(editedRequest)
@@ -62,16 +64,31 @@ const editProfile = async (req, res, next) => {
 		if (user) return next(errorHandler.userExist())
 	}
 
-	// if user sent password we need to encrypt again
-	if (editUser.password) {
-		const hashed = await authServices.generateHash(editUser.password)
-		editUser.password = hashed
-	}
-
 	// save upd fields in DB
 	const editedUser = await userServices.updateUser(req.user.uid, editUser)
 
 	return res.send(editedUser)
 }
 
-module.exports = {getById, getAll, getFullUser, editProfile}
+const editPassword = async (req, res, next) => {
+	// Get user's encrypted pass
+	const user = await userServices.findUserById(req.user.uid)
+	if (!user) return next(errorHandler.userNotFound())
+
+	// // Lets check if password match with encrypted password
+	const passwordValidation = await authServices.comparePassword(req.body.password, user.password)
+	if (!passwordValidation) return next(errorHandler.userNotFound())
+
+	// If validation passess encypt new password
+	const newHashed = await authServices.generateHash(req.body.rePassword)
+
+	console.log(newHashed, 'user')
+
+	// Update user new password
+
+	const updPass = await userServices.updateUser(req.user.uid, {password: newHashed})
+
+	res.send({succes: true})
+}
+
+module.exports = {getById, getAll, getFullUser, editPassword, editProfile}
