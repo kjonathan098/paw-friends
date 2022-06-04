@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
 import {Tabs, TabList, TabPanels, Tab, TabPanel, Flex} from '@chakra-ui/react'
-import SearchPets from './SearchPets'
-import MyPets from './MyPets'
-import MyFavorites from './MyFavorites'
+import SearchPets from './2-SearchPets'
+import MyPets from './3-MyPets'
+import MyFavorites from './4-MyFavorites'
 
 const PetsMain = () => {
 	return (

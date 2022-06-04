@@ -1,5 +1,5 @@
 import {SmallAddIcon} from '@chakra-ui/icons'
-import {Box, BreadcrumbLink, Button, Center, HStack, Input, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Portal, Radio, RadioGroup, Stack, useBoolean, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Text} from '@chakra-ui/react'
+import {Box, BreadcrumbLink, Button, Center, HStack, Input, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Portal, Radio, RadioGroup, Stack, useBoolean, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Text, SliderMark} from '@chakra-ui/react'
 import React, {useContext, useEffect} from 'react'
 import {useState} from 'react'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
@@ -25,8 +25,6 @@ const AdvanceSearch = ({setFlag}) => {
 
 	const handleQuery = async (e) => {
 		setIsFetching(true)
-
-		console.log('hhey there')
 
 		const params = {
 			name: values.name,
@@ -64,14 +62,16 @@ const AdvanceSearch = ({setFlag}) => {
 	}
 
 	return (
-		<Box p={3} width={`100%`}>
+		<>
 			<PopoverCloseButton onClick={setFlag.off} />
 			<Center>
 				<PopoverHeader mb={5} fontWeight={'400'}>
 					Advance Search
 				</PopoverHeader>
 			</Center>
-			<Input placeholder="Search Name" name="name" onChange={handleChange} value={values.name} />
+			<Center>
+				<Input placeholder="Search Name" name="name" onChange={handleChange} value={values.name} width={'100%'} />
+			</Center>
 			<HStack mt={5}>
 				<RadioGroup
 					name="type"
@@ -149,8 +149,10 @@ const AdvanceSearch = ({setFlag}) => {
 				<RangeSliderThumb boxSize={6} index={0} shadow={'lg'} />
 				<RangeSliderThumb boxSize={6} index={1} shadow={'lg'} />
 			</RangeSlider>
-			<Button onClick={handleQuery}>Search</Button>
-		</Box>
+			<Button onClick={handleQuery} mt={5}>
+				Search
+			</Button>
+		</>
 	)
 }
 

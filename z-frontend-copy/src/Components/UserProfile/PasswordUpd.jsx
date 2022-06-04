@@ -12,14 +12,17 @@ const PasswordUpd = () => {
 	const updPassword = async () => {
 		setLoading(true)
 
-		// if (values.rePassword !== values.passwordValidation) {
-		// 	return errorToast('New Password & Re-type New Password mismatch')
-		// }
+		if (Object.keys(values).length !== 3) {
+			return errorToast('Details not filled ')
+		}
+
+		if (values.rePassword !== values.passwordValidation) {
+			return errorToast('New Password & Re-type New Password mismatch')
+		}
 
 		delete values.passwordValidation
 
 		const res = await userConfig.updUserPassword(values)
-		console.log(res)
 		if (res.error) {
 			return errorToast('Error')
 		}
@@ -32,7 +35,7 @@ const PasswordUpd = () => {
 	}
 
 	return (
-		<Accordion allowToggle borderRight={'10px'} borderColor="black.200">
+		<Accordion allowToggle borderRight={'10px'} borderColor="black.200" bg={'#f2f2f2'}>
 			<AccordionItem>
 				<h2>
 					<AccordionButton>
@@ -42,12 +45,12 @@ const PasswordUpd = () => {
 						<AccordionIcon />
 					</AccordionButton>
 				</h2>
-				<AccordionPanel bg={'#f2f2f2'}>
+				<AccordionPanel borderColor="black.200">
 					<FormLabel>Current Password</FormLabel>
 					<Input placeholder="Current Password" _placeholder={{color: 'gray.500'}} type="password" name="password" onChange={handleChange} mb={3} />
 					<FormLabel>New Password</FormLabel>
 					<Input placeholder="New Password" _placeholder={{color: 'gray.500'}} type="password" name="rePassword" onChange={handleChange} mb={3} />
-					<FormLabel>Re-type Password</FormLabel>
+					<FormLabel>Re-type New Password</FormLabel>
 					<Input placeholder="Re-type Password" _placeholder={{color: 'gray.500'}} type="password" name="passwordValidation" onChange={handleChange} mb={3} />
 					<Button
 						bg={'blue.400'}

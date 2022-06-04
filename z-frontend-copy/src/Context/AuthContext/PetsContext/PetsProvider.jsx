@@ -18,8 +18,11 @@ const PetsProvider = ({children}) => {
 	const fetchAll = async () => {
 		try {
 			const data = await axios.get('http://localhost:4000/api/pet/', {headers: {Authorization: localStorage.getItem('access_token')}})
+			console.log(data)
 			setAllPets(data.data)
 		} catch (error) {
+			console.log('errror', error)
+
 			setError(error.message)
 		} finally {
 			setLoading(false)

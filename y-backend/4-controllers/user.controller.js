@@ -82,11 +82,8 @@ const editPassword = async (req, res, next) => {
 	// If validation passess encypt new password
 	const newHashed = await authServices.generateHash(req.body.rePassword)
 
-	console.log(newHashed, 'user')
-
 	// Update user new password
-
-	const updPass = await userServices.updateUser(req.user.uid, {password: newHashed})
+	await userServices.updateUser(req.user.uid, {password: newHashed})
 
 	res.send({succes: true})
 }

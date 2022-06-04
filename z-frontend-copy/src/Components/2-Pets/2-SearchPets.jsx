@@ -3,10 +3,11 @@ import React, {useContext, useEffect, useState} from 'react'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
 import useFetch from '../../CustomHooks/apiCalls/useFetch'
 import SearchBarMain from '../3-SearchBar/SearchBarMain'
-import PetsCardsDisplay from './PetsCardsDisplay'
+import PetsCardsDisplay from './5-PetsCardsDisplay'
 
 const SearchPets = () => {
 	const {allPets, loading, fetchAll, fetchUserPets} = useContext(petsContext)
+	console.log('all pets', allPets)
 
 	useEffect(() => {
 		fetchAll()

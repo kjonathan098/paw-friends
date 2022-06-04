@@ -36,7 +36,7 @@ const SearchBarMain = () => {
 							</Tooltip>
 						</Flex>
 					</PopoverTrigger>
-					<PopoverContent w={{md: `800px`, sm: '300px'}} padding={5}>
+					<PopoverContent w={{md: `800px`, sm: 'auto'}} padding={5}>
 						<AdvanceSearch setFlag={setFlag} />
 					</PopoverContent>
 				</Popover>

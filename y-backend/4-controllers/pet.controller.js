@@ -23,6 +23,7 @@ const addPet = async (req, res, next) => {
 }
 
 const findAll = async (req, res) => {
+	console.log('hello')
 	// Get all pets from DB
 	const pets = await petServices.getAll()
 	return res.send(pets)

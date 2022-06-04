@@ -3,7 +3,7 @@ import React, {useContext, useEffect} from 'react'
 import authContext from '../../Context/AuthContext/AuthContext'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
 import LoginAlert from '../../UI_Kit/LoginAlert'
-import PetsCardsDisplay from './PetsCardsDisplay'
+import PetsCardsDisplay from './5-PetsCardsDisplay'
 
 const MyFavorites = () => {
 	const {isLoggedIn, loading} = useContext(authContext)
