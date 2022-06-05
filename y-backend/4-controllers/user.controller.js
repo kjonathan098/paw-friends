@@ -51,7 +51,6 @@ const editProfile = async (req, res, next) => {
 	// // validate that fields sent have values
 	const error = joiValidateService(editProfileValidation, editedRequest)
 	if (error) {
-		console.log(error)
 		return next(errorHandler.joiValidationFailed(error))
 	}
 

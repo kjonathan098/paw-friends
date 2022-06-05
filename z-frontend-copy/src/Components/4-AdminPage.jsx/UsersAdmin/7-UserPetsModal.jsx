@@ -1,5 +1,4 @@
-import React, {useContext, useState} from 'react'
-import petsContext from '../../../Context/AuthContext/PetsContext/PetsContex'
+import React, {useState} from 'react'
 import {Table, Thead, Tbody, Tr, Th, Td, TableContainer} from '@chakra-ui/react'
 import useFetch from '../../../CustomHooks/apiCalls/useFetch'
 import {useEffect} from 'react'

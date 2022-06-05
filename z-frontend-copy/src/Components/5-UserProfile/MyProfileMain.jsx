@@ -1,12 +1,10 @@
 import React from 'react'
-import {Button, Flex, FormControl, FormLabel, Heading, Input, Stack, useColorModeValue, HStack, Avatar, AvatarBadge, IconButton, Center, Text, Textarea, Badge, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box} from '@chakra-ui/react'
-import {SmallCloseIcon} from '@chakra-ui/icons'
+import {Button, Flex, FormControl, FormLabel, Heading, Input, Stack, HStack, Avatar, Center, Textarea, Badge} from '@chakra-ui/react'
 import {useContext} from 'react'
 import authContext from '../../Context/AuthContext/AuthContext'
 import {useEffect} from 'react'
 import useFetch from '../../CustomHooks/apiCalls/useFetch'
 import {useState} from 'react'
-import axios from 'axios'
 import useForm from '../../CustomHooks/apiCalls/useForm'
 import ErrorAlert from '../../UI_Kit/ErrorAlert'
 import userConfig from '../../Config/User.Config'
@@ -14,7 +12,7 @@ import useToastMessage from '../../UI_Kit/ToastMessage'
 import avatarProfile from '../../Media/avatarProfile.jpeg'
 import PasswordUpd from './PasswordUpd'
 
-const MyProfileMainCopy = () => {
+const MyProfileMain = () => {
 	const {userInfo, loading} = useContext(authContext)
 	const {data: user, fetchLoading, error, reFetch, setData} = useFetch(`http://localhost:4000/api/user/${userInfo.uid}`)
 	const [values, handleChange, setState] = useForm()
@@ -126,4 +124,4 @@ const MyProfileMainCopy = () => {
 	)
 }
 
-export default MyProfileMainCopy
+export default MyProfileMain

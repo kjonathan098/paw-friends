@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react'
-import useFetch from '../../CustomHooks/apiCalls/useFetch'
+import {useState} from 'react'
 
 const usePetStatusTwo = () => {
 	const [petStatusloading, setPetStatusloading] = useState(true)

@@ -1,8 +1,6 @@
 import axios from 'axios'
 import React, {useContext} from 'react'
-import {useEffect} from 'react'
 import {useState} from 'react'
-import useFetch from '../../../CustomHooks/apiCalls/useFetch'
 import authContext from '../AuthContext'
 import petsContext from './PetsContex'
 
@@ -18,11 +16,8 @@ const PetsProvider = ({children}) => {
 	const fetchAll = async () => {
 		try {
 			const data = await axios.get('http://localhost:4000/api/pet/', {headers: {Authorization: localStorage.getItem('access_token')}})
-			console.log(data)
 			setAllPets(data.data)
 		} catch (error) {
-			console.log('errror', error)
-
 			setError(error.message)
 		} finally {
 			setLoading(false)
@@ -40,7 +35,6 @@ const PetsProvider = ({children}) => {
 			setUserAdoptedPet([...userPets.data.adoptedPet])
 			setUserFavorites([...userPets.data.favoritePet])
 		} catch (error) {
-			console.log(error)
 			setError(error)
 		} finally {
 			setLoadingUserPets(false)
@@ -55,15 +49,9 @@ const PetsProvider = ({children}) => {
 			setAllPets(qResponse.data)
 			return true
 		} catch (error) {
-			console.log(error)
 		} finally {
 		}
 	}
-
-	// useEffect(() => {
-	// 	// if (!isLoggedIn) return setLoadingUserPets(false)
-	// 	fetchUserPets()
-	// }, [isLoggedIn, pets])
 
 	return <petsContext.Provider value={{userAdoptedPet, setUserAdoptedPet, userFavorites, setUserFavorites, loadingUserPets, allPets, setAllPets, fetchQuery, fetchAll, loading, fetchUserPets}}>{children}</petsContext.Provider>
 }

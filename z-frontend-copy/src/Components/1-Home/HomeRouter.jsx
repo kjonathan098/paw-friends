@@ -1,5 +1,4 @@
 import React, {useContext} from 'react'
-import {useEffect} from 'react'
 import authContext from '../../Context/AuthContext/AuthContext'
 import HomeNoUser from './Home.NoUser'
 import HomeUser from './Home.User'

@@ -1,7 +1,6 @@
-import {Button, HStack, Icon, IconButton, Td, Tr, useDisclosure} from '@chakra-ui/react'
+import {Button, HStack, Icon, Td, Tr, useDisclosure} from '@chakra-ui/react'
 import React from 'react'
-import {BsBoxArrowUpRight, BsFillTrashFill} from 'react-icons/bs'
-import {AiFillEdit, AiTwotoneLock} from 'react-icons/ai'
+import {AiTwotoneLock} from 'react-icons/ai'
 import UserModal from './5-UserModal'
 
 const UserTableBody = ({user}) => {

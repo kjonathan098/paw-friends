@@ -1,20 +1,13 @@
-import {Box, Heading, Text, Stack, Image, Modal, useDisclosure, Skeleton, ModalOverlay, ModalContent, ModalBody, Button} from '@chakra-ui/react'
+import {Box, Heading, Text, Stack, Image, Modal, useDisclosure, ModalOverlay, ModalContent, ModalBody, Button} from '@chakra-ui/react'
 import React, {useState} from 'react'
-import {useEffect} from 'react'
 import usePetStatus from '../../CustomHooks/PetManipulation/usePetStatus'
-import usePetStatusTwo from '../../CustomHooks/PetManipulation/usePetStatusTwo'
-import usePetType from '../../CustomHooks/PetManipulation/usePetType'
 import PetModal from './6-PetModal'
-import {AdvancedImage, lazyload, accessibility, responsive, placeholder} from '@cloudinary/react'
+import {lazyload, placeholder} from '@cloudinary/react'
 
 const PetsCardsDisplay = ({pet}) => {
 	const {isOpen, onOpen, onClose} = useDisclosure()
 
 	usePetStatus(pet)
-
-	// console.log(petStatus)
-
-	const [petStatus, setPetStatus] = useState()
 
 	return (
 		<Box role={'group'} p={6} maxW={'330px'} w={'full'} bg={'white'} boxShadow={'2xl'} rounded={'lg'} pos={'relative'}>

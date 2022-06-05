@@ -1,5 +1,4 @@
-import {useToast} from '@chakra-ui/react'
-import React, {useContext} from 'react'
+import {useContext} from 'react'
 import handlePetRequest from '../../Config/Pet.Config'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
 
@@ -10,10 +9,8 @@ function useAdoptPet(pet) {
 		const res = await handlePetRequest.adoptPet(pet)
 		if (res.error) return res
 		pet.adoptionStatus = 2
-		console.log(userAdoptedPet)
 
 		setUserAdoptedPet([...userAdoptedPet, pet])
-		console.log('goood')
 
 		return res
 

@@ -2,9 +2,11 @@ import React, {useContext} from 'react'
 import authContext from '../../Context/AuthContext/AuthContext'
 import heroLoggedIn from '../../Media/HerUser.jpeg'
 import {Stack, Flex, Button, Text, VStack, useBreakpointValue} from '@chakra-ui/react'
+import {useNavigate} from 'react-router-dom'
 
 const HomeUser = () => {
 	const {userInfo, loading} = useContext(authContext)
+	const navigate = useNavigate()
 
 	if (loading) return <>loading...</>
 	return (
@@ -18,10 +20,26 @@ const HomeUser = () => {
 						Lets Get Started
 					</Text>
 					<Stack direction={'row'}>
-						<Button bg={'green.400'} rounded={'full'} color={'white'} _hover={{bg: 'green.500'}}>
+						<Button
+							bg={'green.400'}
+							rounded={'full'}
+							color={'white'}
+							_hover={{bg: 'green.500'}}
+							onClick={() => {
+								navigate('/pets')
+							}}
+						>
 							Search Pets
 						</Button>
-						<Button bg={'whiteAlpha.300'} rounded={'full'} color={'white'} _hover={{bg: 'whiteAlpha.500'}}>
+						<Button
+							bg={'whiteAlpha.300'}
+							rounded={'full'}
+							color={'white'}
+							_hover={{bg: 'whiteAlpha.500'}}
+							onClick={() => {
+								navigate('/pets')
+							}}
+						>
 							My Pets
 						</Button>
 					</Stack>

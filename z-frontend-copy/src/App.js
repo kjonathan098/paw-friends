@@ -1,7 +1,7 @@
 import './App.css'
 import Home from './Components/1-Home/HomeRouter'
 import {NavLink, Route, Routes, useNavigate} from 'react-router-dom'
-import {Button, Flex} from '@chakra-ui/react'
+import {Flex} from '@chakra-ui/react'
 import AuthProvider from './Context/AuthContext/AuthProvider'
 import AuthButton from './UI_Kit/Loggin.Logout.Btn'
 import PetsMain from './Components/2-Pets/1-PetsMain'
@@ -9,11 +9,9 @@ import AuthRoute from './Components/Z-Auth/AuthRoute'
 import AuthModal from './Components/Z-Auth/AuthModal'
 import LoginModalProvider from './Context/AuthContext/LoginModalContext/LoginModalProvider'
 import PetsProvider from './Context/AuthContext/PetsContext/PetsProvider'
-import HomeRouter from './Components/1-Home/HomeRouter'
 import AdminRouter from './Components/4-AdminPage.jsx/1-AdminRouter'
-import AdminMain from './Components/4-AdminPage.jsx/2-AdminMain'
 import logo from './Media/logo2.png'
-import MyProfileMainCopy from './Components/UserProfile/MyProfileMain'
+import MyProfileMain from './Components/5-UserProfile/MyProfileMain'
 function App() {
 	const nav = useNavigate()
 	return (
@@ -61,7 +59,7 @@ function App() {
 									path="/profile"
 									element={
 										<AuthRoute>
-											<MyProfileMainCopy />
+											<MyProfileMain />
 										</AuthRoute>
 									}
 								/>

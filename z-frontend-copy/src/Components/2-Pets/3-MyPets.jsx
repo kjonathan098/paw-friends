@@ -1,12 +1,9 @@
 import {Center, SimpleGrid} from '@chakra-ui/react'
-import axios from 'axios'
 import React from 'react'
-import {useState} from 'react'
 import {useEffect} from 'react'
 import {useContext} from 'react'
 import authContext from '../../Context/AuthContext/AuthContext'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
-import useFetch from '../../CustomHooks/apiCalls/useFetch'
 import LoginAlert from '../../UI_Kit/LoginAlert'
 import PetsCardsDisplay from './5-PetsCardsDisplay'
 

@@ -4,7 +4,6 @@ import LoginModalContext from './LoginModalContext'
 
 const LoginModalProvider = ({children}) => {
 	const {isOpen, onOpen, onClose} = useDisclosure()
-	const test = 'test'
 	return <LoginModalContext.Provider value={{isOpen, onOpen, onClose}}>{children}</LoginModalContext.Provider>
 }
 

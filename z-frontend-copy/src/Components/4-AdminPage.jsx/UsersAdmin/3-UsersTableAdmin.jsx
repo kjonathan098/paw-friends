@@ -1,9 +1,6 @@
-import {Center, ButtonGroup, Flex, IconButton, Table, Tbody, Td, Th, Thead, Tr, useColorModeValue, TableContainer, Button, Icon, HStack, Modal, useDisclosure, useBoolean, ModalOverlay, ModalContent, ModalBody} from '@chakra-ui/react'
+import {Center, Table, Tbody, Th, Thead, Tr, TableContainer} from '@chakra-ui/react'
 import React from 'react'
-import {BsBoxArrowUpRight, BsFillTrashFill} from 'react-icons/bs'
-import {AiFillEdit, AiTwotoneLock} from 'react-icons/ai'
 import useFetch from '../../../CustomHooks/apiCalls/useFetch'
-import UserModal from './5-UserModal'
 import UserTableBody from './4-UserTableBody'
 
 const UserTableAdmin = () => {

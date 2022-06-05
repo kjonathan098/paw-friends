@@ -1,5 +1,5 @@
 import {Center, SimpleGrid} from '@chakra-ui/react'
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import authContext from '../../Context/AuthContext/AuthContext'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
 import LoginAlert from '../../UI_Kit/LoginAlert'

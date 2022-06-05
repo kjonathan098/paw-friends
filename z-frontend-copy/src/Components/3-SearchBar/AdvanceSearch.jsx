@@ -1,5 +1,4 @@
-import {SmallAddIcon} from '@chakra-ui/icons'
-import {Box, BreadcrumbLink, Button, Center, HStack, Input, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Portal, Radio, RadioGroup, Stack, useBoolean, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Text, SliderMark} from '@chakra-ui/react'
+import {Button, Center, HStack, Input, PopoverCloseButton, PopoverHeader, Radio, RadioGroup, Stack, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Text} from '@chakra-ui/react'
 import React, {useContext, useEffect} from 'react'
 import {useState} from 'react'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
@@ -18,11 +17,6 @@ const AdvanceSearch = ({setFlag}) => {
 	const [isFetching, setIsFetching] = useState(false)
 	const {errorToast} = useToastMessage()
 
-	// const onClear = async (e)=>{
-	// 	setForm(initialState)
-	// 	fetchAllPets()
-	// }
-
 	const handleQuery = async (e) => {
 		setIsFetching(true)
 
@@ -36,16 +30,8 @@ const AdvanceSearch = ({setFlag}) => {
 			height_end: values.height[1],
 		}
 
-		console.log(params)
-
 		if (params.type === '-1') params.type = null
 		if (params.adoption_status === '-1') params.adoption_status = null
-
-		// if (values.name) params["name"] = values.name
-		// if (values.weight[0] !== initialState.weight[0]) {
-		// 	params["weight_start"] = values.weight[0]
-		// 	params["weight_end"] = values.weight[1]
-		// }
 
 		try {
 			const qResponse = await fetchQuery({params})
@@ -57,8 +43,6 @@ const AdvanceSearch = ({setFlag}) => {
 		} catch (e) {
 			setIsFetching(false)
 		}
-
-		// console.log(qResponse)
 	}
 
 	return (
@@ -116,7 +100,7 @@ const AdvanceSearch = ({setFlag}) => {
 				value={values.weight}
 				min={0}
 				max={100}
-				step={10}
+				step={5}
 				name="weight"
 				onChange={(newValue) => {
 					const event = createEvent('weight', newValue)
@@ -136,7 +120,7 @@ const AdvanceSearch = ({setFlag}) => {
 				value={values.height}
 				min={0}
 				max={110}
-				step={10}
+				step={5}
 				name="height"
 				onChange={(newValue) => {
 					const event = createEvent('height', newValue)

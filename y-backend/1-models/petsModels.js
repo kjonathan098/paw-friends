@@ -10,6 +10,7 @@ const petSchema = mongoose.Schema({
 		type: String,
 		required: true,
 		minlength: 1,
+		maxlenght: 10,
 	},
 	adoptionStatus: {
 		type: Number,
@@ -33,11 +34,13 @@ const petSchema = mongoose.Schema({
 		type: String,
 		required: true,
 		minlength: 1,
+		maxlenght: 10,
 	},
 	bio: {
 		type: String,
 		required: true,
 		minlength: 1,
+		maxlenght: 50,
 	},
 	hypoallergenic: {
 		type: Boolean,
@@ -47,11 +50,13 @@ const petSchema = mongoose.Schema({
 		type: String,
 		required: true,
 		minlength: 1,
+		maxlenght: 30,
 	},
 	breed: {
 		type: String,
 		required: true,
 		minlength: 1,
+		maxlenght: 20,
 	},
 })
 

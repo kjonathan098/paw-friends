@@ -1,36 +1,30 @@
-import {Badge, Button, Center, Flex, Heading, Image, Link, Stack, Text, Tooltip, IconButton} from '@chakra-ui/react'
+import {Badge, Button, Center, Flex, Heading, Image, Stack, Text, Tooltip, IconButton} from '@chakra-ui/react'
 import {StarIcon} from '@chakra-ui/icons'
 import React, {useContext, useState} from 'react'
 import authContext from '../../Context/AuthContext/AuthContext'
 import loginModalContext from '../../Context/AuthContext/LoginModalContext/LoginModalContext'
 import {useEffect} from 'react'
-import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
 import useFavoritePets from '../../CustomHooks/PetManipulation/useFavoritePets'
 import useAdoptPet from '../../CustomHooks/PetManipulation/useAdoptPet'
-import showToast from '../../UI_Kit/ToastMessage'
 import useToastMessage from '../../UI_Kit/ToastMessage'
 import useModalButtons from '../../CustomHooks/PetManipulation/useModalButtons'
-import usePetStatusTwo from '../../CustomHooks/PetManipulation/usePetStatusTwo'
 import usePetType from '../../CustomHooks/PetManipulation/usePetType'
 
-const PetModal = ({pet, onClose}) => {
-	const {isLoggedIn, loading, userInfo} = useContext(authContext)
-	const [success, setSuccess] = useState()
-	const [error, setError] = useState()
+const PetModal = ({pet}) => {
+	const {isLoggedIn, loading} = useContext(authContext)
+	const [error] = useState()
 
 	const {onOpen} = useContext(loginModalContext)
 
 	const {isFavorite, addToFavorites, removeFavorite} = useFavoritePets(pet)
-	const {fosterBtnDis, adoptBtnDis, returnBtnDis, btnHandler} = useModalButtons(pet)
-	const {adoptPet, returnPet, fosterPet, createToast} = useAdoptPet(pet)
+	const {fosterBtnDis, adoptBtnDis, returnBtnDis} = useModalButtons(pet)
+	const {adoptPet, returnPet, fosterPet} = useAdoptPet(pet)
 	const {showToast, errorToast} = useToastMessage()
 
 	const {handleType, petTypeLoading} = usePetType()
 	useEffect(() => {
 		handleType([pet])
 	}, [])
-
-	// console.log(fosterBtnDis)
 
 	const handleAdoptPet = async () => {
 		if (!isLoggedIn) return onOpen()

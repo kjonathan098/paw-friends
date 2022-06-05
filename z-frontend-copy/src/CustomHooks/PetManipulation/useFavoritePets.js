@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
 import handlePetRequest from '../../Config/Pet.Config'
 
@@ -30,7 +30,6 @@ function useFavoritePets(pet) {
 
 	const removeFavorite = async () => {
 		const res = await handlePetRequest.removeFromFavorites(pet)
-		console.log(res)
 		if (res.error) return res
 		userFavorites.splice(favoriteIndex, 1)
 		setUserFavorites([...userFavorites])

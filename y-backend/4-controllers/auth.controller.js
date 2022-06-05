@@ -28,7 +28,6 @@ const register = async (req, res, next) => {
 	// save user to DB user Services
 	user = await userServices.saveUser(req.body)
 
-	// console.log(user)
 	return res.send({succes: true, userId: user})
 }
 
@@ -42,7 +41,6 @@ const login = async (req, res, next) => {
 	if (!user) return next(errorHandler.userNotFound())
 
 	const passwordValidation = await authServices.comparePassword(req.body.password, user.password)
-	console.log(passwordValidation)
 	if (!passwordValidation) return next(errorHandler.userNotFound())
 
 	// Save user permissions in "reddis"

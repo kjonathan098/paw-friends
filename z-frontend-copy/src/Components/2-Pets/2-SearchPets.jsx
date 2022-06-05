@@ -1,13 +1,11 @@
 import {Box, Center, SimpleGrid} from '@chakra-ui/react'
 import React, {useContext, useEffect, useState} from 'react'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
-import useFetch from '../../CustomHooks/apiCalls/useFetch'
 import SearchBarMain from '../3-SearchBar/SearchBarMain'
 import PetsCardsDisplay from './5-PetsCardsDisplay'
 
 const SearchPets = () => {
-	const {allPets, loading, fetchAll, fetchUserPets} = useContext(petsContext)
-	console.log('all pets', allPets)
+	const {allPets, loading, fetchAll} = useContext(petsContext)
 
 	useEffect(() => {
 		fetchAll()
