@@ -7,20 +7,27 @@ import {useEffect} from 'react'
 import petsContext from '../../../Context/AuthContext/PetsContext/PetsContex'
 import handlePetRequest from '../../../Config/Pet.Config'
 import cloudlyRequest from '../../../Config/Cloudly.Config'
+import authContext from '../../../Context/AuthContext/AuthContext'
 
 const PetModalEdit = ({isOpen, onClose, pet}) => {
 	const intitialState = {picture: pet.picture, name: pet.name, type: pet.type, adoptionStatus: pet.adoptionStatus, bio: pet.bio, breed: pet.breed, color: pet.color, dietaryRestrictions: pet.dietaryRestrictions, height: pet.height, hypoallergenic: pet.hypoallergenic, weight: pet.weight}
 	const {allPets, setAllPets} = useContext(petsContext)
-
 	const [values, handleChange, setState] = useForm(intitialState)
 	const [loading, setLoading] = useState()
 	const {showToast, errorToast} = useToastMessage()
 	const [error, setError] = useState()
 	const [picPreview, setPicPreview] = useState()
+	const {userInfo} = useContext(authContext)
 
 	const updatePet = async () => {
 		setError(null)
 		setLoading(true)
+
+		if (userInfo.permissions === '1') {
+			errorToast('Admin level not allowed to add or modify DB')
+			setLoading(false)
+			return
+		}
 
 		if (picPreview) {
 			const url = await cloudlyRequest.uploadPic(picPreview)

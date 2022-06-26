@@ -11,16 +11,18 @@ import avatarProfile from '../Media/avatarProfile.jpeg'
 
 const AuthButton = () => {
 	const navigate = useNavigate()
-	const {isLoggedIn, setLoading, setIsLoggedIn} = useContext(authContext)
+	const {isLoggedIn, setLoading, setIsLoggedIn, userInfo} = useContext(authContext)
 	const {isOpen, onOpen, onClose} = useContext(loginModalContext)
 	const [isAdmin, setIsAdmin] = useState(false)
 	const toast = useToast()
 
 	useEffect(() => {
-		let userPermission = localStorage.getItem('user_info')
-		userPermission = JSON.parse(userPermission)
-		if (!userPermission?.permissions?.admin) return
-		if (userPermission?.permissions?.admin) return setIsAdmin(true)
+		// let userPermission = localStorage.getItem('user_info')
+		// userPermission = JSON.parse(userPermission)
+		// if (!userPermission?.permissions?.admin) return
+		// if (userPermission?.permissions?.admin) return setIsAdmin(true)
+		if (userInfo?.permissions === '0') return
+		setIsAdmin(true)
 	}, [isLoggedIn])
 
 	const handleLogout = () => {

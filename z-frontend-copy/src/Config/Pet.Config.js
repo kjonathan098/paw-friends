@@ -10,7 +10,6 @@ const handlePetRequest = {
 		}
 	},
 	adoptPet: async (pet) => {
-		console.log(pet._id)
 		try {
 			const res = await axios.post(`http://localhost:4000/api/pet/${pet._id}/adopt`, {request: 2}, {headers: {Authorization: localStorage.getItem('access_token')}})
 			return res.data

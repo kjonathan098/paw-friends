@@ -6,6 +6,7 @@ import petsContext from '../../../Context/AuthContext/PetsContext/PetsContex'
 import useToastMessage from '../../../UI_Kit/ToastMessage'
 import cloudlyRequest from '../../../Config/Cloudly.Config'
 import handlePetRequest from '../../../Config/Pet.Config'
+import authContext from '../../../Context/AuthContext/AuthContext'
 
 const AddPetModal = ({isOpen, onClose, allPets, pet}) => {
 	const [values, handleChange] = useForm()
@@ -13,10 +14,16 @@ const AddPetModal = ({isOpen, onClose, allPets, pet}) => {
 	const [loading, setLoading] = useState()
 	const {showToast, errorToast} = useToastMessage()
 
+	const {userInfo} = useContext(authContext)
+
 	const [petPicture, setPetPicture] = useState()
 
 	const addNewPet = async () => {
-		setLoading(true)
+		if (userInfo.permissions === '1') {
+			errorToast('Admin level not allowed to add or modify DB')
+			setLoading(false)
+			return
+		}
 
 		const couldlyUrl = await cloudlyRequest.uploadPic(petPicture)
 
@@ -54,7 +61,7 @@ const AddPetModal = ({isOpen, onClose, allPets, pet}) => {
 							<FormLabel>Add Pet Picture</FormLabel>
 							<Stack direction={['column', 'row']} spacing={6}>
 								<Center>
-									<Avatar size="xl" src={petPicture ? URL.createObjectURL(petPicture) : 'https://bit.ly/sage-adebayo'}></Avatar>
+									<Avatar size="xl" src={petPicture ? URL.createObjectURL(petPicture) : null}></Avatar>
 								</Center>
 								<Center w="full">
 									<input

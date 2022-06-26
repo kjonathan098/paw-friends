@@ -1,4 +1,4 @@
-import {Flex, Box, FormControl, FormLabel, Input, Stack, Link, Button, Heading, Text, useColorModeValue, Badge, useToast} from '@chakra-ui/react'
+import {Flex, Box, FormControl, FormLabel, Input, Stack, Link, Button, Heading, Text, useColorModeValue, Badge, useToast, VStack, HStack} from '@chakra-ui/react'
 import React, {useContext} from 'react'
 import {useState} from 'react'
 import userConfig from '../../Config/User.Config'
@@ -10,13 +10,15 @@ import toastMessage from '../../UI_Kit/ToastMessage'
 const LoginForm = ({setFormContent}) => {
 	const {setUserInfo, setIsLoggedIn} = useContext(authContext)
 	const {onClose} = useContext(loginModalContext)
-	const [values, handleChange] = useForm()
+	let [values, handleChange, setState] = useForm()
 	const [error, setError] = useState()
 	const [loading, setLoading] = useState()
 	const toast = useToast()
 
-	const handleLogin = async () => {
+	const handleLogin = async (demo) => {
 		setLoading(true)
+
+		if (demo) values = {email: 'dem@gmail.com', password: '1234'}
 
 		// const isValid = validate(values)
 		// if (!isValid) return setLoading(false)
@@ -62,7 +64,7 @@ const LoginForm = ({setFormContent}) => {
 								{error}
 							</Badge>
 						)}
-						<Stack spacing={10}>
+						<VStack spacing={3} justifyContent="space-around">
 							<Button
 								bg={'green.400'}
 								color={'white'}
@@ -74,7 +76,23 @@ const LoginForm = ({setFormContent}) => {
 							>
 								Sign in
 							</Button>
-						</Stack>
+
+							<Text align={'center'}>Or click here to sign in to our demo account and view all features </Text>
+							<Button
+								bg={'green.900'}
+								color={'white'}
+								_hover={{
+									bg: 'green.800',
+								}}
+								onClick={() => {
+									const demo = true
+									handleLogin(demo)
+								}}
+								isLoading={loading}
+							>
+								Demo Account{' '}
+							</Button>
+						</VStack>
 						<Stack direction={{base: 'column', sm: 'row'}} align={'start'} justify={'space-between'}>
 							<Text align={'center'}>
 								New User?

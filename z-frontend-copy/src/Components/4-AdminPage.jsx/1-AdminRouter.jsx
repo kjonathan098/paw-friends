@@ -8,7 +8,7 @@ import {useState} from 'react'
 const AdminRouter = () => {
 	const [isAdmin, setIsAdmin] = useState(false)
 	const [adminLoading, setLoading] = useState(true)
-	const {isLoggedIn, loading} = useContext(authContext)
+	const {isLoggedIn, userInfo} = useContext(authContext)
 
 	const navigate = useNavigate()
 
@@ -17,14 +17,14 @@ const AdminRouter = () => {
 
 	useEffect(() => {
 		if (!isLoggedIn) return
-		if (!userPermission?.permissions?.admin) return navigate('/')
+		if (userInfo?.permissions === '0') return navigate('/')
 		setIsAdmin(true)
 		setLoading(false)
 	}, [isLoggedIn])
 
 	if (adminLoading) return <>Loading.. </>
 
-	return <AdminMain isAdmin={isAdmin} />
+	return <AdminMain />
 }
 
 export default AdminRouter
