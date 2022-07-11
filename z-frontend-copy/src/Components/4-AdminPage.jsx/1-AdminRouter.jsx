@@ -17,7 +17,7 @@ const AdminRouter = () => {
 
 	useEffect(() => {
 		if (!isLoggedIn) return
-		if (userInfo?.permissions === '0') return navigate('/')
+		if (userInfo?.permissions === 0) return navigate('/')
 		setIsAdmin(true)
 		setLoading(false)
 	}, [isLoggedIn])
