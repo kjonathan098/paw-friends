@@ -15,14 +15,11 @@ const AuthButton = () => {
 	const {isOpen, onOpen, onClose} = useContext(loginModalContext)
 	const [isAdmin, setIsAdmin] = useState(false)
 	const toast = useToast()
-
+	console.log('isAdmin', userInfo?.permissions)
 	useEffect(() => {
-		// let userPermission = localStorage.getItem('user_info')
-		// userPermission = JSON.parse(userPermission)
-		// if (!userPermission?.permissions?.admin) return
-		// if (userPermission?.permissions?.admin) return setIsAdmin(true)
-		if (userInfo?.permissions === '0') return
-		setIsAdmin(true)
+		if (!userInfo) return
+		if (userInfo?.permissions === 0) return console.log('this code should run')
+		else setIsAdmin(true)
 	}, [isLoggedIn])
 
 	const handleLogout = () => {
