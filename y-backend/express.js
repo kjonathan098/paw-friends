@@ -6,6 +6,8 @@ const errorMW = require('./6-middlerWares/errorMW')
 const cors = require('cors')
 
 const express = require('express')
+const {MongoClient, ServerApiVersion} = require('mongodb')
+
 const app = express()
 app.use(
 	cors({
@@ -15,11 +17,15 @@ app.use(
 app.use(express.json())
 
 const mongoose = require('mongoose')
+const e = require('express')
 mongoose
-	.connect('mongodb://localhost/petAdoption')
-	.then(() => console.log('connected to mongoDB/ pet adoption'))
-	.catch((e) => console.log('error', e))
-
+	.connect(`mongodb+srv://jonathan_kelman:mediaNo1030@cluster0.nhark3v.mongodb.net/petAdoption?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
+	.then(() => {
+		console.log('connected to petAdoption DB')
+	})
+	.catch((e) => {
+		console.log('error', e)
+	})
 app.use('/api/pet', petRoute)
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)

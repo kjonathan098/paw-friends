@@ -28,9 +28,11 @@ const userSchema = mongoose.Schema({
 		maxlength: 9,
 	},
 	permissions: {
-		user: {type: Boolean, default: true, required: true},
-		admin: {type: Boolean},
+		type: Number,
+		required: true,
+		default: 0,
 	},
+
 	bio: {
 		type: String,
 		maxlength: 250,

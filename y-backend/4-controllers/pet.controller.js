@@ -10,8 +10,9 @@ const {Pet} = require('../1-models/petsModels')
 const {FavoritePet} = require('../1-models/userSavePet')
 
 const addPet = async (req, res, next) => {
+	console.log(req.user.permissions)
 	// Validate user is an admin
-	if (!req.user.permissions.admin) next(petErrorHandler.onlyAdmin())
+	if (req.user.permissions !== 2) next(petErrorHandler.onlyAdmin())
 
 	// Validate req
 	const error = joiValidateService(validatePet, req.body)
@@ -23,7 +24,6 @@ const addPet = async (req, res, next) => {
 }
 
 const findAll = async (req, res) => {
-	console.log('hello')
 	// Get all pets from DB
 	const pets = await petServices.getAll()
 	return res.send(pets)

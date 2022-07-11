@@ -22,7 +22,8 @@ const getById = async (req, res, next) => {
 
 const getAll = async (req, res, next) => {
 	//check if user is admin
-	if (!req.user.permissions.admin) return next(errorHandler.onlyAdmin())
+	console.log(req.user.permissions, 'req.user.permissions')
+	if (req.user.permissions === '0') return next(errorHandler.onlyAdmin())
 
 	// get list of all users
 	const users = await userServices.getAll()

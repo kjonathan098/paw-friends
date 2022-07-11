@@ -44,7 +44,6 @@ const login = async (req, res, next) => {
 	if (!passwordValidation) return next(errorHandler.userNotFound())
 
 	// Save user permissions in "reddis"
-	await userServices.saveUserInReddis(user)
 
 	// Create Tokens
 	const tokens = jwtLib.createTokens(user)
