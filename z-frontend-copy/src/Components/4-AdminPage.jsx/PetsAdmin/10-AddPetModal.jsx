@@ -19,7 +19,7 @@ const AddPetModal = ({isOpen, onClose, allPets, pet}) => {
 	const [petPicture, setPetPicture] = useState()
 
 	const addNewPet = async () => {
-		if (userInfo.permissions === '1') {
+		if (userInfo.permissions === 1) {
 			errorToast('Admin level not allowed to add or modify DB')
 			setLoading(false)
 			return
