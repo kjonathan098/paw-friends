@@ -18,17 +18,19 @@ const LoginForm = ({setFormContent}) => {
 	const handleLogin = async (demo) => {
 		setLoading(true)
 
-		if (demo) values = {email: 'dem@gmail.com', password: '1234'}
+		// if (demo) values = {email: 'demo@gmail.com', password: '1234'}
 
 		// const isValid = validate(values)
 		// if (!isValid) return setLoading(false)
 
+		console.log('values', values)
 		const userInfo = await userConfig.loginUser(values)
 		if (userInfo.error) {
 			setError(userInfo.message)
 			return setLoading(false)
 		}
 		setUserInfo(userInfo)
+		console.log(userInfo)
 		setIsLoggedIn(true)
 		onClose()
 		toast({

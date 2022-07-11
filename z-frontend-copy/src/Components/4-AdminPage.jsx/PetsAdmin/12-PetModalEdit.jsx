@@ -22,8 +22,10 @@ const PetModalEdit = ({isOpen, onClose, pet}) => {
 	const updatePet = async () => {
 		setError(null)
 		setLoading(true)
+		console.log(userInfo.permissions)
 
-		if (userInfo.permissions === '1') {
+		if (userInfo.permissions === 1) {
+			console.log('here!')
 			errorToast('Admin level not allowed to add or modify DB')
 			setLoading(false)
 			return
