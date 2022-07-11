@@ -6,7 +6,6 @@ const errorMW = require('./6-middlerWares/errorMW')
 const cors = require('cors')
 
 const express = require('express')
-const {MongoClient, ServerApiVersion} = require('mongodb')
 
 const app = express()
 app.use(
@@ -32,6 +31,6 @@ app.use('/api/user', userRoute)
 
 app.use(errorMW)
 
-app.listen(4000, () => {
+app.listen(process.env.PORT || 4000, () => {
 	console.log('listening on port 4000...')
 })
