@@ -53,14 +53,14 @@ function App() {
 						</Flex>
 
 						{isOpen ? (
-							<VStack pb={4} display={{md: 'none'}} bg={'gray.100'}>
-								<Stack as={'nav'} spacing={4}>
-									<Flex justifyContent={'center'}>
+							<VStack display={{md: 'none'}} bg={'gray.100'}>
+								<Stack as={'nav'} h={'100%'}>
+									<Flex justifyContent={'center'} _hover={{bg: 'gray.200'}}>
 										<NavLink to="/" className="navLkink">
 											Home
 										</NavLink>
 									</Flex>
-									<Flex justifyContent={'center'}>
+									<Flex justifyContent={'center'} _hover={{bg: 'gray.200'}}>
 										<NavLink to="/pets" className="navLkink">
 											Pets
 										</NavLink>
