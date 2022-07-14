@@ -6,6 +6,7 @@ import authContext from '../../Context/AuthContext/AuthContext'
 import loginModalContext from '../../Context/AuthContext/LoginModalContext/LoginModalContext'
 import useForm from '../../CustomHooks/apiCalls/useForm'
 import toastMessage from '../../UI_Kit/ToastMessage'
+import DemoAccount from './DemoAccount'
 
 const LoginForm = ({setFormContent}) => {
 	const {setUserInfo, setIsLoggedIn} = useContext(authContext)
@@ -17,8 +18,8 @@ const LoginForm = ({setFormContent}) => {
 
 	const handleLogin = async (demo) => {
 		setLoading(true)
-
-		// if (demo) values = {email: 'demo@gmail.com', password: '1234'}
+		console.log(process.env.DEMO_EMAIL, 'process.env.DemoAccount')
+		if (demo) values = {email: 'demo@gmail.com', password: '1234'}
 
 		// const isValid = validate(values)
 		// if (!isValid) return setLoading(false)
@@ -80,20 +81,7 @@ const LoginForm = ({setFormContent}) => {
 							</Button>
 
 							<Text align={'center'}>Or click here to sign in to our demo account and view all features </Text>
-							<Button
-								bg={'green.900'}
-								color={'white'}
-								_hover={{
-									bg: 'green.800',
-								}}
-								onClick={() => {
-									const demo = true
-									handleLogin(demo)
-								}}
-								isLoading={loading}
-							>
-								Demo Account{' '}
-							</Button>
+							<DemoAccount handleLogin={handleLogin} loading={loading} />
 						</VStack>
 						<Stack direction={{base: 'column', sm: 'row'}} align={'start'} justify={'space-between'}>
 							<Text align={'center'}>
