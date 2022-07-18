@@ -4,9 +4,10 @@ import useFetch from '../../../CustomHooks/apiCalls/useFetch'
 import {useEffect} from 'react'
 import usePetStatusTwo from '../../../CustomHooks/PetManipulation/usePetStatusTwo.js'
 import usePetType from '../../../CustomHooks/PetManipulation/usePetType'
+import apirUrl from '../../../Utils/apiCall'
 
 const UserPetsModal = ({user}) => {
-	const {data, fetchLoading, error, reFetch, setData} = useFetch(`http://localhost:4000/api/pet/userPets/${user._id}`)
+	const {data, fetchLoading, error, reFetch, setData} = useFetch(`${apirUrl}/api/pet/userPets/${user._id}`)
 
 	const {petStatusStringArray, petStatusloading, petStatusString} = usePetStatusTwo()
 	const {petTypeLoading, petTypeStringArray, handleType} = usePetType()

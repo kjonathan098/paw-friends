@@ -3,7 +3,7 @@ import React, {useContext} from 'react'
 import {useState} from 'react'
 import authContext from '../AuthContext'
 import petsContext from './PetsContex'
-
+import apirUrl from '../../../Utils/apiCall'
 const PetsProvider = ({children}) => {
 	const {userInfo} = useContext(authContext)
 	const [userAdoptedPet, setUserAdoptedPet] = useState([])
@@ -15,7 +15,7 @@ const PetsProvider = ({children}) => {
 
 	const fetchAll = async () => {
 		try {
-			const data = await axios.get('http://localhost:4000/api/pet/', {headers: {Authorization: localStorage.getItem('access_token')}})
+			const data = await axios.get(`${apirUrl}/api/pet/`, {headers: {Authorization: localStorage.getItem('access_token')}})
 			setAllPets(data.data)
 		} catch (error) {
 			setError(error.message)
@@ -31,7 +31,7 @@ const PetsProvider = ({children}) => {
 			return setLoadingUserPets(false)
 		}
 		try {
-			const userPets = await axios.get(`http://localhost:4000/api/pet/userPets/${userInfo.uid}`)
+			const userPets = await axios.get(`${apirUrl}/api/pet/userPets/${userInfo.uid}`)
 			setUserAdoptedPet([...userPets.data.adoptedPet])
 			setUserFavorites([...userPets.data.favoritePet])
 		} catch (error) {
@@ -44,7 +44,7 @@ const PetsProvider = ({children}) => {
 	// Change Pets display according to query
 	const fetchQuery = async (qObject) => {
 		try {
-			const qResponse = await axios.get(`http://localhost:4000/api/pet/query`, qObject)
+			const qResponse = await axios.get(`${apirUrl}/api/pet/query`, qObject)
 			if (!qResponse.data.length) return false
 			setAllPets(qResponse.data)
 			return true

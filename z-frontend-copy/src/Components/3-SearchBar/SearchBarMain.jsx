@@ -1,11 +1,8 @@
 import {Button, Flex, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Select, Tooltip, useBoolean, useDisclosure, VStack} from '@chakra-ui/react'
 import React, {useContext} from 'react'
-import {useState} from 'react'
-import useSearch from '../../CustomHooks/SearchHook/useSearch'
 import {SearchIcon} from '@chakra-ui/icons'
 import AdvanceSearch from './AdvanceSearch'
 import petsContext from '../../Context/AuthContext/PetsContext/PetsContex'
-import axios from 'axios'
 
 const SearchBarMain = () => {
 	const [flag, setFlag] = useBoolean()

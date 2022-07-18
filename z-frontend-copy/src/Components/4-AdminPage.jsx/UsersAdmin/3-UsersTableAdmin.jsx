@@ -2,9 +2,10 @@ import {Center, Table, Tbody, Th, Thead, Tr, TableContainer} from '@chakra-ui/re
 import React from 'react'
 import useFetch from '../../../CustomHooks/apiCalls/useFetch'
 import UserTableBody from './4-UserTableBody'
+import apirUrl from '../../../Utils/apiCall'
 
 const UserTableAdmin = () => {
-	const {data: users, fetchLoading} = useFetch(`http://localhost:4000/api/user`)
+	const {data: users, fetchLoading} = useFetch(`${apirUrl}/api/user`)
 
 	if (fetchLoading) return <>Loading...</>
 	if (!users) return <>No users</>

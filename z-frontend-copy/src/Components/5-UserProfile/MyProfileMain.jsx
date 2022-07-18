@@ -11,10 +11,11 @@ import userConfig from '../../Config/User.Config'
 import useToastMessage from '../../UI_Kit/ToastMessage'
 import avatarProfile from '../../Media/avatarProfile.jpeg'
 import PasswordUpd from './PasswordUpd'
+import apirUrl from '../../Utils/apiCall'
 
 const MyProfileMain = () => {
 	const {userInfo, loading} = useContext(authContext)
-	const {data: user, fetchLoading, error, reFetch, setData} = useFetch(`http://localhost:4000/api/user/${userInfo.uid}`)
+	const {data: user, fetchLoading, error, reFetch, setData} = useFetch(`${apirUrl}/api/user/${userInfo.uid}`)
 	const [values, handleChange, setState] = useForm()
 	const [updError, setUpdError] = useState()
 	const {showToast} = useToastMessage()
