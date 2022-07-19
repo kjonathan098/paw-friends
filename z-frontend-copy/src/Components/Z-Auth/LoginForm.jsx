@@ -18,8 +18,9 @@ const LoginForm = ({setFormContent}) => {
 
 	const handleLogin = async (demo) => {
 		setLoading(true)
-		console.log(demo, 'demo')
-		if (demo) values = {email: 'demo@gmail.com', password: '1234'}
+		console.log(process.env.REACT_APP_DEMO_EMAIL, 'demo')
+
+		if (demo) values = {email: process.env.REACT_APP_DEMO_EMAIL, password: process.env.REACT_APP_DEMO_PASSWORD}
 
 		console.log('values', values)
 		const userInfo = await userConfig.loginUser(values)
