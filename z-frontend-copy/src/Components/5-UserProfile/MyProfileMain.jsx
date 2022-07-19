@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Flex, FormControl, FormLabel, Heading, Input, Stack, HStack, Avatar, Center, Textarea, Badge} from '@chakra-ui/react'
+import {Button, Flex, FormControl, FormLabel, Heading, Input, Stack, HStack, Avatar, Center, Textarea, Badge, Spinner} from '@chakra-ui/react'
 import {useContext} from 'react'
 import authContext from '../../Context/AuthContext/AuthContext'
 import {useEffect} from 'react'
@@ -53,7 +53,12 @@ const MyProfileMain = () => {
 		showToast('Success', 'Profile Updated ')
 	}
 
-	if (loading || fetchLoading) return <>Loading....</>
+	if (loading || fetchLoading)
+		return (
+			<Center>
+				<Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+			</Center>
+		)
 	if (error)
 		return (
 			<Flex minH={'100vh'} align={'center'} justify={'center'} bg={'gray.50'}>
