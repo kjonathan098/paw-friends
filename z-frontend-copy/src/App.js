@@ -34,6 +34,9 @@ function App() {
 									onClick={() => {
 										nav('/')
 									}}
+									_hover={{
+										cursor: 'pointer',
+									}}
 								/>
 
 								<Flex alignItems={'center'} spacing={10} w="500px" justifyContent="space-around">
