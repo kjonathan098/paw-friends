@@ -10,8 +10,7 @@ const DemoAccount = ({handleLogin, loading}) => {
 				bg: 'green.800',
 			}}
 			onClick={() => {
-				const demo = true
-				handleLogin(demo)
+				handleLogin(true)
 			}}
 			isLoading={loading}
 		>

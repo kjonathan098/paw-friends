@@ -18,11 +18,8 @@ const LoginForm = ({setFormContent}) => {
 
 	const handleLogin = async (demo) => {
 		setLoading(true)
-		console.log(process.env.DEMO_EMAIL, 'process.env.DemoAccount')
+		console.log(demo, 'demo')
 		if (demo) values = {email: 'demo@gmail.com', password: '1234'}
-
-		// const isValid = validate(values)
-		// if (!isValid) return setLoading(false)
 
 		console.log('values', values)
 		const userInfo = await userConfig.loginUser(values)
@@ -74,7 +71,9 @@ const LoginForm = ({setFormContent}) => {
 								_hover={{
 									bg: 'green.500',
 								}}
-								onClick={handleLogin}
+								onClick={() => {
+									handleLogin(false)
+								}}
 								isLoading={loading}
 							>
 								Sign in
