@@ -51,7 +51,6 @@ const login = async (req, res, next) => {
 	tokens.surName = user.surName
 	tokens.uid = user._id
 	tokens.permissions = user.permissions
-
 	return res.send(tokens)
 }
 
