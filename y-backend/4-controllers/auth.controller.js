@@ -1,11 +1,11 @@
 const _ = require('lodash')
-const {errorHandler} = require('../7-config/authErrorConfig')
+const { errorHandler } = require('../7-config/authErrorConfig')
 const userServices = require('../5-services/user.services')
 const authServices = require('../5-services/auth.service')
-const {jwtLib} = require('../8-lib/jwt.lib')
-const {loginValidation} = require('../2-joiValidations/loginValidation')
-const {registerValidation} = require('../2-joiValidations/registrationValidation')
-const {joiValidateService} = require('../5-services/joi.validate.serivces')
+const { jwtLib } = require('../8-lib/jwt.lib')
+const { loginValidation } = require('../2-joiValidations/loginValidation')
+const { registerValidation } = require('../2-joiValidations/registrationValidation')
+const { joiValidateService } = require('../5-services/joi.validate.serivces')
 
 const register = async (req, res, next) => {
 	// Validate body with Joi Service
@@ -28,7 +28,7 @@ const register = async (req, res, next) => {
 	// save user to DB user Services
 	user = await userServices.saveUser(req.body)
 
-	return res.send({succes: true, userId: user})
+	return res.send({ succes: true, userId: user })
 }
 
 const login = async (req, res, next) => {
@@ -55,4 +55,4 @@ const login = async (req, res, next) => {
 	return res.send(tokens)
 }
 
-module.exports = {register, login}
+module.exports = { register, login }
