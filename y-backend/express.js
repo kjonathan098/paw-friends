@@ -31,14 +31,7 @@ mongoose
 	.catch((e) => {
 		console.log('error', e)
 	})
-// mongoose
-// 	.connect(`mongodb://localhost/petAdoption`, { useNewUrlParser: true, useUnifiedTopology: true })
-// 	.then(() => {
-// 		console.log('connected to petAdoption DB')
-// 	})
-// 	.catch((e) => {
-// 		console.log('error', e)
-// 	})
+
 app.use('/api/pet', petRoute)
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
