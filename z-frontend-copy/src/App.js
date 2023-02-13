@@ -1,7 +1,7 @@
 import './App.css'
 import Home from './Components/1-Home/HomeRouter'
-import {NavLink, Route, Routes, useNavigate} from 'react-router-dom'
-import {Box, Flex, HStack, IconButton, Stack, useDisclosure, VStack} from '@chakra-ui/react'
+import { NavLink, Route, Routes, useNavigate } from 'react-router-dom'
+import { Box, Flex, HStack, IconButton, Stack, useDisclosure, VStack } from '@chakra-ui/react'
 import AuthProvider from './Context/AuthContext/AuthProvider'
 import AuthButton from './UI_Kit/Loggin.Logout.Btn'
 import PetsMain from './Components/2-Pets/1-PetsMain'
@@ -12,11 +12,14 @@ import PetsProvider from './Context/AuthContext/PetsContext/PetsProvider'
 import AdminRouter from './Components/4-AdminPage.jsx/1-AdminRouter'
 import logo from './Media/logo2.png'
 import MyProfileMain from './Components/5-UserProfile/MyProfileMain'
-import {HamburgerIcon, CloseIcon} from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 
 function App() {
 	const nav = useNavigate()
-	const {isOpen, onOpen, onClose} = useDisclosure()
+	const { isOpen, onOpen, onClose } = useDisclosure()
+	const demoEmail = process.env.REACT_APP_TEST
+
+	console.log(demoEmail, 'env')
 
 	return (
 		<AuthProvider>
@@ -40,9 +43,15 @@ function App() {
 								/>
 
 								<Flex alignItems={'center'} spacing={10} w="500px" justifyContent="space-around">
-									<IconButton size={'md'} icon={isOpen ? <CloseIcon /> : <HamburgerIcon />} aria-label={'Open Menu'} display={{md: 'none'}} onClick={isOpen ? onClose : onOpen} />
+									<IconButton
+										size={'md'}
+										icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+										aria-label={'Open Menu'}
+										display={{ md: 'none' }}
+										onClick={isOpen ? onClose : onOpen}
+									/>
 
-									<HStack display={{base: 'none', md: 'flex'}}>
+									<HStack display={{ base: 'none', md: 'flex' }}>
 										<NavLink to="/" className="navLkink">
 											Home
 										</NavLink>
@@ -56,14 +65,14 @@ function App() {
 						</Flex>
 
 						{isOpen ? (
-							<VStack display={{md: 'none'}} bg={'gray.100'}>
+							<VStack display={{ md: 'none' }} bg={'gray.100'}>
 								<Stack as={'nav'} h={'100%'}>
-									<Flex justifyContent={'center'} _hover={{bg: 'gray.200'}}>
+									<Flex justifyContent={'center'} _hover={{ bg: 'gray.200' }}>
 										<NavLink to="/" className="navLkink">
 											Home
 										</NavLink>
 									</Flex>
-									<Flex justifyContent={'center'} _hover={{bg: 'gray.200'}}>
+									<Flex justifyContent={'center'} _hover={{ bg: 'gray.200' }}>
 										<NavLink to="/pets" className="navLkink">
 											Pets
 										</NavLink>

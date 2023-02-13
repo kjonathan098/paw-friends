@@ -1,11 +1,11 @@
 import axios from 'axios'
-import React, {useContext} from 'react'
-import {useState} from 'react'
+import React, { useContext } from 'react'
+import { useState } from 'react'
 import authContext from '../AuthContext'
 import petsContext from './PetsContex'
 import apirUrl from '../../../Utils/apiCall'
-const PetsProvider = ({children}) => {
-	const {userInfo} = useContext(authContext)
+const PetsProvider = ({ children }) => {
+	const { userInfo } = useContext(authContext)
 	const [userAdoptedPet, setUserAdoptedPet] = useState([])
 	const [userFavorites, setUserFavorites] = useState([])
 	const [loadingUserPets, setLoadingUserPets] = useState(true)
@@ -15,7 +15,9 @@ const PetsProvider = ({children}) => {
 
 	const fetchAll = async () => {
 		try {
-			const data = await axios.get(`${apirUrl}/api/pet/`, {headers: {Authorization: localStorage.getItem('access_token')}})
+			const data = await axios.get(`${apirUrl}/api/pet/`, {
+				headers: { Authorization: localStorage.getItem('access_token') },
+			})
 			setAllPets(data.data)
 		} catch (error) {
 			setError(error.message)
@@ -53,7 +55,25 @@ const PetsProvider = ({children}) => {
 		}
 	}
 
-	return <petsContext.Provider value={{userAdoptedPet, setUserAdoptedPet, userFavorites, setUserFavorites, loadingUserPets, allPets, setAllPets, fetchQuery, fetchAll, loading, fetchUserPets}}>{children}</petsContext.Provider>
+	return (
+		<petsContext.Provider
+			value={{
+				userAdoptedPet,
+				setUserAdoptedPet,
+				userFavorites,
+				setUserFavorites,
+				loadingUserPets,
+				allPets,
+				setAllPets,
+				fetchQuery,
+				fetchAll,
+				loading,
+				fetchUserPets,
+			}}
+		>
+			{children}
+		</petsContext.Provider>
+	)
 }
 
 export default PetsProvider

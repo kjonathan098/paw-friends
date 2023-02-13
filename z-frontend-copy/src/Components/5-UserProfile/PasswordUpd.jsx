@@ -1,16 +1,28 @@
-import React, {useState} from 'react'
-import {Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, FormLabel, Input, Button} from '@chakra-ui/react'
+import React, { useState } from 'react'
+import {
+	Accordion,
+	AccordionItem,
+	AccordionButton,
+	AccordionPanel,
+	AccordionIcon,
+	Box,
+	FormLabel,
+	Input,
+	Button,
+} from '@chakra-ui/react'
 import useForm from '../../CustomHooks/apiCalls/useForm'
 import useToastMessage from '../../UI_Kit/ToastMessage'
 import userConfig from '../../Config/User.Config'
 
-const PasswordUpd = () => {
+const PasswordUpd = ({ userInfo }) => {
 	const [values, handleChange, setState] = useForm()
 	const [loading, setLoading] = useState()
-	const {showToast, errorToast} = useToastMessage()
+	const { showToast, errorToast } = useToastMessage()
 
 	const updPassword = async () => {
 		setLoading(true)
+
+		if (userInfo.name === 'Demo') return errorToast('Not allowed to update password')
 
 		if (Object.keys(values).length !== 3) {
 			return errorToast('Details not filled ')
@@ -47,11 +59,32 @@ const PasswordUpd = () => {
 				</h2>
 				<AccordionPanel borderColor="black.200">
 					<FormLabel>Current Password</FormLabel>
-					<Input placeholder="Current Password" _placeholder={{color: 'gray.500'}} type="password" name="password" onChange={handleChange} mb={3} />
+					<Input
+						placeholder="Current Password"
+						_placeholder={{ color: 'gray.500' }}
+						type="password"
+						name="password"
+						onChange={handleChange}
+						mb={3}
+					/>
 					<FormLabel>New Password</FormLabel>
-					<Input placeholder="New Password" _placeholder={{color: 'gray.500'}} type="password" name="rePassword" onChange={handleChange} mb={3} />
+					<Input
+						placeholder="New Password"
+						_placeholder={{ color: 'gray.500' }}
+						type="password"
+						name="rePassword"
+						onChange={handleChange}
+						mb={3}
+					/>
 					<FormLabel>Re-type New Password</FormLabel>
-					<Input placeholder="Re-type Password" _placeholder={{color: 'gray.500'}} type="password" name="passwordValidation" onChange={handleChange} mb={3} />
+					<Input
+						placeholder="Re-type Password"
+						_placeholder={{ color: 'gray.500' }}
+						type="password"
+						name="passwordValidation"
+						onChange={handleChange}
+						mb={3}
+					/>
 					<Button
 						bg={'blue.400'}
 						color={'white'}
